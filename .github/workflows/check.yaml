@@ -36,6 +36,9 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements-dev.txt
+      - name: Where Are We?
+        run: |
+          ls -l
       - name: Static checks
         run: |
           ./scripts/ci/static_checks/run_static_checks.sh
