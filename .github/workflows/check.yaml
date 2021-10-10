@@ -21,8 +21,9 @@ jobs:
       - uses: actions/checkout@v2
         with:
           path: ${{ env.pythonLocation }}
+      - name: Install dependencies
         run: |
           pip install -r requirements-dev.txt
       - name: Static checks
         run: |
-          sudo ./scripts/ci/static_checks/run_static_checks.sh
+          ./scripts/ci/static_checks/run_static_checks.sh
