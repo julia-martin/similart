@@ -26,4 +26,4 @@ jobs:
           pip install -r requirements-dev.txt
       - name: Static checks
         run: |
-          ./scripts/ci/static_checks/run_static_checks.sh
+          sudo ./scripts/ci/static_checks/run_static_checks.sh
