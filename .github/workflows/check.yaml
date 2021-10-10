@@ -21,9 +21,17 @@ jobs:
       - uses: actions/checkout@v2
         with:
           path: workspace
+      - name: Set OS name
+        run: |
+          echo "OS_$(cat /etc/os-release | sed -n '/PRETTY_NAME=\(.*\)/p')" >> $GITHUB_ENV
+          echo "IMAGE_VERSION=$ImageVersion" >> $GITHUB_ENV
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
       - name: Install dependencies
         run: |
           pip install -r requirements-dev.txt
       - name: Static checks
         run: |
-          ./scripts/ci/static_checks/run_static_checks.sh
+          scripts/ci/static_checks/run_static_checks.sh
