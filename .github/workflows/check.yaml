@@ -20,7 +20,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
+          path: workspace
+      - name: Set OS name
+        run: |
+          echo "OS_$(cat /etc/os-release | sed -n '/PRETTY_NAME=\(.*\)/p')" >> $GITHUB_ENV
+          echo "IMAGE_VERSION=$ImageVersion" >> $GITHUB_ENV
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - uses: actions/cache@v2
+        with:
           path: ${{ env.pythonLocation }}
+          key: ${{ env.OS_PRETTY_NAME }}-${{ env.IMAGE_VERSION }}-${{ env.pythonLocation }}-${{ hashFiles('requirements-dev.txt') }}
       - name: Install dependencies
         run: |
           pip install -r requirements-dev.txt
