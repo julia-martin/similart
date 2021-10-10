@@ -6,14 +6,16 @@ Art Recommendation System
 
 * **Always** make a new branch for code changes. For free, private repositories it is not possible to enforce this as a setting but you should **never** push directly to the main branch.
 * Let the code checks run before merging. Every time you open a pull request a series of basic style checks will be run on the code, if you've installed pre-commit (see below) you should have already addressed these changes, but this will check one more time. As above, it isn't possible in this type of repository to prevent the merge if checks do not pass, but you should wait.
-* Be aware of when you need to pull fresh code that others have pushed, learn about (Rebases and Merges)[https://www.atlassian.com/git/tutorials/merging-vs-rebasing] and when (not) to use them.
+* Be aware of when you need to pull fresh code that others have pushed, learn about [Rebases and Merges](https://www.atlassian.com/git/tutorials/merging-vs-rebasing) and when (not) to use them.
 * If you run into a merge conflict be sure to find an adult for assistance, these can be tricky to resolve correctly if you are not careful.
 
 ## Dev Setup Instructions
 
 There a few steps that need to be taken to get setup and running.
 
-First we'll install managers for both Python versions and Virtual Environments. If you are on Windows your life may be harder, virtual environments are not **stricly** necessary but you will likely be caused some degree of agony and heartbreak by not using them, as they keep the Python and package versions for this project separate from anything else you have running on your machine. These instructions apply to MacOS and other *Nix systems, Windows versions of these tools do exist though. I chose Python 3.9.0 as the version for this project simply because it is the version I have been using most recently.
+First we'll install managers for both Python versions and Virtual Environments. If you are on Windows your life may be harder, virtual environments are not **stricly** necessary but you will likely be caused some degree of agony and heartbreak by not using them, as they keep the Python and package versions for this project separate from anything else you have running on your machine.
+
+These instructions apply to MacOS and other *Nix systems, Windows versions of these tools do exist though.
 
 * Clone the repo to your local machine. I prefer to use the SSH method, but HTTPS will work just fine too.
 * Install [pyenv](https://github.com/pyenv/pyenv) and [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv) with homebrew if you can, other ways if you must.
