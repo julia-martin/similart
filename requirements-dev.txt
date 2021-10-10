@@ -1,0 +1,7 @@
+-e
+flake8
+flake8-colors
+pep8-naming
+autoflake
+pre-commit
+radon
