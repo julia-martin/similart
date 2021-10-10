@@ -23,11 +23,11 @@ These instructions apply to MacOS and other *Nix systems, Windows versions of th
 * Navigate to the root of this project directory.
 * Create a virtualenv for the repo with `pyenv virtualenv 3.9.0 similart`
 * In the project root execute `echo 3.9.0/envs/similart > .python-version` (this is what tells pyenv-virtualenv to activate the correct environment in this directory)
-* Run `pre-commit install` to add the same CI checks to your local machine.
 
 Next we'll install development dependencies and get the package installed.
 
 * Run `pip install -r requirements-dev.txt` This installs linters and other code-checks.
+* Run `pre-commit install` to add the same CI checks to your local machine.
 * Run `pip install -e .` This installs the package in **editable** mode, as you make changes to the code, things will change as you save files. Very useful.
 
 I have included a `.flake8` file which contains configuration instructions for using flake8 as a linter. This can be imported into most code editors, VSCode, Pycharm etc. and allows us to have a consistent style as we write code together. Having said that, the checks are extremely lightweight and if you choose not to use them you are unlikely to cause issues unless you are reponsible for some truly horrific code.
