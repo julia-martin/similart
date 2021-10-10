@@ -1,4 +1,4 @@
--e
+-e file:.#egg=similart
 flake8
 flake8-colors
 pep8-naming
