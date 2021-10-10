@@ -11,5 +11,3 @@ Install pyenv and pyenv-virtualenv with your favourite package manager.
 Install Python 3.9.0 with pyenv install 3.9.0
 Create a virtualenv for the repo with pyenv virtualenv 3.9.0 similart
 In the project root execute echo 3.9.0/envs/similart > .python-version
-
-
