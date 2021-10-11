@@ -10,14 +10,14 @@ def start():
 
 @app.route('/quiz', methods=['POST'])
 def process_quiz():
-    # TODO
-    return
+    # TODO: Run ML model and include output in render_template
+    return render_template('results.html')
 
 
 @app.route('/upload', methods=['POST'])
 def process_upload():
-    # TODO
-    return
+    # TODO: Run ML model and include output in render_template
+    return render_template('results.html')
 
 
 @app.route('/results', methods=['GET'])
