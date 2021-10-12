@@ -35,6 +35,10 @@ function showPreview(e) {
   }
 }
 
+function handleImageSubmit(e) {
+
+}
+
 function handleQuizSubmit(e) {
 // TODO: Parse form data
 }
@@ -42,4 +46,5 @@ function handleQuizSubmit(e) {
 // Attach event listeners
 radioBtns.forEach(input => input.addEventListener('change', handleRadioButton));
 document.getElementById('user-submission').addEventListener('change', showPreview);
+document.getElementById('image-upload').addEventListener('submit', handleImageSubmit);
 document.getElementById('quiz').addEventListener('submit', handleQuizSubmit);
