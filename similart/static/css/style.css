@@ -3,7 +3,7 @@
 * rose: #E080D5
 * bluegrey: #B6BBE0
 * skyblue: #D9F4FF
-* salmon: #FF8178
+* dark purple: #592AE6
 */
 
 * {
@@ -12,7 +12,7 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
-header {
+header, footer {
   background-color: #B780F5;
   color: white;
   padding: 20px;
@@ -50,6 +50,7 @@ fieldset {
 }
 
 legend {
+  color: #592AE6;
   font-weight: bold;
   padding: 10px;
 }
@@ -59,7 +60,7 @@ input[type='checkbox'], input[type='file'] {
 }
 
 figure {
-  border: 1px solid gray;
+  border: 1px solid #B6BBE0;;
   display: inline-block;
   margin: 10px;
   padding: 10px;
@@ -109,7 +110,7 @@ label img:hover {
 
 button {
   background-color: #B780F5;
-  border: 1px solid #B780F5;
+  border: none;
   border-radius: 10px;
   color: white;
   display: block;
@@ -119,7 +120,11 @@ button {
 }
 
 button:hover {
-  background-color: white;
-  color: #B780F5;
+  background-color: #592AE6;
+  color: white;
   cursor: pointer;
+}
+
+footer {
+  font-size: 0.8rem;
 }

@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route("/", methods=['GET'])
 def start():
-    return render_template('index.html')
+    return render_template('index.html.jinja')
 
 
 @app.route('/quiz', methods=['POST'])
