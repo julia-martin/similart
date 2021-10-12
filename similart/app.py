@@ -18,8 +18,3 @@ def process_quiz():
 def process_upload():
     # TODO: Run ML model and include output in render_template
     return render_template('results.html')
-
-
-@app.route('/results', methods=['GET'])
-def render_results():
-    return render_template('results.html')
