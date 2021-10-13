@@ -35,7 +35,7 @@
       </fieldset>
       <fieldset class='artworks'>
         <legend>Select the artwork that appeals to you the most from the below choices:</legend>
-        {% for i in range(1, 12) %}
+        {% for i in range(1, 21) %}
           <figure>
             <input type="radio" name="selected-work" id="{{ i }}" value="{{ i }}">
             <label for="{{ i }}"><img src="./static/images/{{ i }}.jpeg" alt="Option {{ i }}"/></label>
