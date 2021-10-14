@@ -34,12 +34,6 @@ function showPreview(e) {
     reader.readAsDataURL(fileInput.files[0]);
   }
 }
-
-function handleQuizSubmit(e) {
-// TODO: Parse form data
-}
-
 // Attach event listeners
 radioBtns.forEach(input => input.addEventListener('change', handleRadioButton));
 document.getElementById('user-submission').addEventListener('change', showPreview);
-document.getElementById('quiz').addEventListener('submit', handleQuizSubmit);
