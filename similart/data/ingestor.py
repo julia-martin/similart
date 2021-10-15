@@ -58,15 +58,15 @@ class ImageIngestor:
         with open(art_data, newline='') as csvfile:
             filereader = csv.reader(csvfile, delimiter=',')
             next(filereader)
-            for i, row in enumerate(filereader):
-                if i == self.num_imgs:
+            for idx, row in enumerate(filereader):
+                if idx == self.num_imgs:
                     break
                 i_id, url_id = row[:2]
                 try:
                     signal.alarm(5)
                     image_array = self._get_img(url_id)
                     self._reset_alarm()
-                    print('Success: ' + str(i))
+                    print('Success: {}'.format(idx))
                 except (ValueError, TimeoutError, error.URLError):
                     self._reset_alarm()
                     print('Unable to get img for {}, skipping'.format(url_id))
@@ -81,8 +81,8 @@ class ImageIngestor:
                     image_array, [self.num_pixels, self.num_pixels, 3],
                     preserve_range=True).astype('uint8')
 
-                self.dataset[i] = resized_array
-                self.idset[i] = int(i_id)
+                self.dataset[idx] = resized_array
+                self.idset[idx] = int(i_id)
                 time.sleep(1)
 
     def close_conn(self):
