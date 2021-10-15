@@ -90,7 +90,7 @@ class ImageIngestor:
 
     def _get_img(self, url_id):
 
-        img_url = ImageIngestor.IMG_URL.format(id=url_id)
+        img_url = IMG_URL.format(url_id)
         image = io.imread(img_url)
 
         return image
