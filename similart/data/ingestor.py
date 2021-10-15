@@ -65,13 +65,14 @@ class ImageIngestor:
                 try:
                     signal.alarm(5)
                     image_array = self._get_img(url_id)
-                    signal.alarm(0)
+                    self._reset_alarm()
                     print('Success: ' + str(i))
                 except (ValueError, TimeoutError, error.URLError):
+                    self._reset_alarm()
                     print('Unable to get img for {}, skipping'.format(url_id))
                     continue
                 except error.HTTPError:
-                    signal.alarm(0)
+                    self._reset_alarm()
                     print('Encountered HTTP Error, continuing in 5 seconds')
                     time.sleep(5)
                     continue
@@ -94,6 +95,10 @@ class ImageIngestor:
         image = io.imread(img_url)
 
         return image
+
+    def _reset_alarm(self):
+
+        signal.alarm(0)
 
 
 if __name__ == '__main__':
