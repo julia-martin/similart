@@ -1,5 +1,8 @@
 {% extends "base.html.jinja" %}
 {% block content %}
-  {{ data }}
+  <div id="d3-container"></div>
   <a href='/'><button type='button'>Start Over</button></a>
+{% endblock %}
+{% block script %}
+  <script src="./static/js/results.js"></script>
 {% endblock %}
