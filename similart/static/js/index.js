@@ -1,4 +1,6 @@
 const radioBtns = document.querySelectorAll("input[name='selected-work']");
+const submitBtns = document.querySelectorAll("button[type='submit']");
+const inputs = document.querySelectorAll("input");
 
 function handleRadioButton(e) {
   radioBtns.forEach(input => {
@@ -34,6 +36,15 @@ function showPreview(e) {
     reader.readAsDataURL(fileInput.files[0]);
   }
 }
+
+function checkValidity(e) {
+  const currForm = this.closest('form');
+  if (currForm.checkValidity()) {
+    currForm.querySelector('button').removeAttribute('disabled');
+  };
+}
+
 // Attach event listeners
 radioBtns.forEach(input => input.addEventListener('change', handleRadioButton));
+inputs.forEach(input => input.addEventListener('change', checkValidity));
 document.getElementById('user-submission').addEventListener('change', showPreview);
