@@ -131,3 +131,5 @@ dmypy.json
 # database files
 hdf5/
 *.h5
+
+.DS_Store
