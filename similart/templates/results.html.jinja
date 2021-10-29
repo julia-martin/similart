@@ -1,5 +1,6 @@
 {% extends "base.html.jinja" %}
 {% block content %}
+  <div id="data-container" data-results='{{ results_data | tojson | safe }}'></div>
   <div id="d3-container"></div>
   <a href='/'><button type='button'>Start Over</button></a>
 {% endblock %}
