@@ -10,6 +10,12 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(12).hex()
 
+DUMMY_DATA = [
+    {"title": "Mona Lisa", "artist": "Leonardo Da Vinci", "category": "Classical", "year": 1400},
+    {"title": "The Basket of Apples", "artist": "Paul Cézanne", "category": "Painting and Sculpture of Europe", "year": 1893},
+    {"title": "Afterglow", "artist": "Jonas Lie", "category": "Arts of the Americas", "year": 1909}
+]
+
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -33,7 +39,7 @@ def process_quiz():
     img = Image.open(f'./static/images/{img_id}.jpeg')
     resized_img = img_to_array(img)  # noqa: F841
     # TODO: Run ML model and include output in render_template
-    session['data'] = 'ML OUTPUT'
+    session['data'] = DUMMY_DATA
     return redirect('/results')
 
 
@@ -51,11 +57,11 @@ def process_upload():
     img = Image.open(img_file)
     resized_img = img_to_array(img)  # noqa: F841
     # TODO: Run ML model and include output in render_template
-    session['data'] = 'ML OUTPUT'
+    session['data'] = DUMMY_DATA
     return redirect('/results')
 
 
 @app.route('/results', methods=['GET'])
 def results():
-    data = session['data']
-    return render_template('results.html.jinja', data=data)
+    results_data = session['data']
+    return render_template('results.html.jinja', results_data=results_data)
