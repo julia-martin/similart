@@ -34,7 +34,7 @@ def start():
 
 @app.route('/quiz', methods=['POST'])
 def process_quiz():
-    # theme = request.form['theme']
+    theme = request.form.getlist('theme')  # noqa: F841
     img_id = request.form['selected-work']
     img = Image.open(f'./static/images/{img_id}.jpeg')
     resized_img = img_to_array(img)  # noqa: F841
