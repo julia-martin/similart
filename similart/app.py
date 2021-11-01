@@ -32,17 +32,6 @@ def start():
     return render_template('index.html.jinja')
 
 
-@app.route('/quiz', methods=['POST'])
-def process_quiz():
-    theme = request.form.getlist('theme')  # noqa: F841
-    img_id = request.form['selected-work']
-    img = Image.open(f'./static/images/{img_id}.jpeg')
-    resized_img = img_to_array(img)  # noqa: F841
-    # TODO: Run ML model and include output in render_template
-    session['data'] = DUMMY_DATA
-    return redirect('/results')
-
-
 @app.route('/upload', methods=['POST'])
 def process_upload():
     # From docs: https://flask.palletsprojects.com/en/2.0.x/patterns/fileuploads/
@@ -56,6 +45,24 @@ def process_upload():
 
     img = Image.open(img_file)
     resized_img = img_to_array(img)  # noqa: F841
+    # TODO: Run ML model and include output in render_template
+    session['data'] = DUMMY_DATA
+    return redirect('/results')
+
+
+@app.route('/select', methods=['POST'])
+def process_selection():
+    img_id = request.form['selected-work']
+    img = Image.open(f'./static/images/{img_id}.jpeg')
+    resized_img = img_to_array(img)  # noqa: F841
+    # TODO: Run ML model and include output in render_template
+    session['data'] = DUMMY_DATA
+    return redirect('/results')
+
+
+@app.route('/quiz', methods=['POST'])
+def process_quiz():
+    theme = request.form.getlist('theme')  # noqa: F841
     # TODO: Run ML model and include output in render_template
     session['data'] = DUMMY_DATA
     return redirect('/results')
