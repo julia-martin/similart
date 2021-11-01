@@ -1,6 +1,6 @@
 {% extends "base.html.jinja" %}
 {% block content %}
-  <div id='intro'><p>Welcome to Similart! Want to discover art you might like but not sure how? Choose to either take a short quiz or upload a piece of art that you like, and our machine learning algorithm will generate recommendations for similar artworks so you can discover and learn about art!</p></div>
+  <div id='intro'><p>Welcome to Similart! Want to discover art you might like but not sure how? Choose between our many options, whether it's your own favorite artwork, choosing one from a selection, or taking a short quiz, and our machine learning algorithm will generate recommendations for similar artworks so you can discover and learn about art!</p></div>
   <div id='image-upload-container' class='container'>
     <h3 class='instruction'>Option 1: Upload an image of an artwork that you like</h3>
     <form id='image-upload' action='/upload' method='post' enctype='multipart/form-data'>
@@ -8,9 +8,21 @@
       <div id="image-preview"></div>
       <button type='submit' id='submit-file' disabled>Submit Image</button>
     </form>
+    <h3 class='instruction'>Option 2: Select the artwork that appeals to you the most from the below choices:</h3>
+    <form id='image-select' action='/select' method='post'>
+      <fieldset class='artworks'>
+        {% for i in range(1, 21) %}
+          <figure>
+            <input type="radio" name="selected-work" id="{{ i }}" value="{{ i }}" required>
+            <label for="{{ i }}"><img src="./static/images/{{ i }}.jpeg" alt="Option {{ i }}"/></label>
+          </figure>
+        {% endfor %}
+      </fieldset>
+      <button type='submit' id='submit-selection' disabled>Submit</button>
+    </form>
   </div>
   <div id='quiz-container' class='container'></div>
-    <h3 class='instruction'>Option 2: Take a short quiz</h3>
+    <h3 class='instruction'>Option 3: Take a short quiz</h3>
     <form id='quiz' action='/quiz' method='post'>
       <fieldset>
         <legend>What are you interested in seeing in art?</legend>
@@ -32,15 +44,6 @@
         <input type="checkbox" name="theme" id="abstract" value="abstract">
         <label for="abstract">&#128165; Abstract</label>
         <br/>
-      </fieldset>
-      <fieldset class='artworks'>
-        <legend>Select the artwork that appeals to you the most from the below choices:</legend>
-        {% for i in range(1, 21) %}
-          <figure>
-            <input type="radio" name="selected-work" id="{{ i }}" value="{{ i }}" required>
-            <label for="{{ i }}"><img src="./static/images/{{ i }}.jpeg" alt="Option {{ i }}"/></label>
-          </figure>
-        {% endfor %}
       </fieldset>
       <button type='submit' id='submit-quiz' disabled>Submit Quiz</button>
     </form>
