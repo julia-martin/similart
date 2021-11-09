@@ -9,6 +9,7 @@ h5 = h5py.File('artworks.h5', "r")
 converted_data = np.load('PCA_Images.npy')
 pca_model = joblib.load('PCA_Model.joblib')
 
+
 def image_toarray(im):
     # Converts 300x300x3 Image to flattened numpy array 1x270000 for analysis
     if type(im) is np.ndarray:
