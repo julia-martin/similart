@@ -1,3 +1,4 @@
+#! usr/bin/env python3
 import h5py
 import joblib
 import numpy as np
@@ -14,42 +15,41 @@ def image_toarray(im):
     # Converts 300x300x3 Image to flattened numpy array 1x270000 for analysis
     if type(im) is np.ndarray:
         im_array = np.array(im).reshape(1, 270000)
-             
+
     # If the image is the uploaded image
     else:
         im = im.resize((300, 300), Image.ANTIALIAS)
         im_array = np.array(im).reshape(1, 270000)
-    
+
     return im_array
 
 
 def art_neighbors(imarray):
-    # Uses flattened numpy array to find the 4 closest neighbors
-    # 5 is used in the algo; however if the image is a musueum dataset, the first image will be itself
+    # Uses flattened numpy array to find the 4 nearest neighbors
 
     neigh = NearestNeighbors(n_neighbors=5, algorithm='ball_tree', p=2)
     neigh.fit(converted_data)
-    
+
     test_data = pca_model.transform(imarray)
     art_neigh = neigh.kneighbors(test_data)
-    
-    # distances returns the euclidean distance between the source and target nodes
+
+    # dist returns the l2 distance between the source and target nodes
     # argdist returns the target nodes, representede in H5's index
-    
+
     # We ignore the first image in the list since it will be itself
     distances = list(art_neigh[0].flatten())[1:5]
     argdistances = list(art_neigh[1].flatten())[1:5]
-    
+
     return distances, argdistances
 
 
 def create_nodes(argdistances, source=None):
     # 0 will be a special ID that refers to the original uploaded image
     # argdistances refer to the closest images
-    # source refers to the index of the source image. None refers to uploaded image
+    # source refers to the index of the source image
 
     nodes_list = [{'image': int(h5['ids'][arg])} for arg in argdistances]
-    
+
     if source is None:
         nodes_list.append({'image': 0})
     else:
@@ -59,36 +59,38 @@ def create_nodes(argdistances, source=None):
 
 
 def create_edges(distances, argdistances, source=None):
-    # distances refer to the euclidean distances between the source and argdistance
+    # distances refer to the closeness between the source and argdist
     # argdistances refer to the closest images
-    # source refers to the index of the source image. None refers to uploaded image
-    
+    # source refers to the index of the source image
+
     zipdistances = zip(distances, argdistances)
-    
+
     if source is None:
         edges_list = [{'source': 0,
                        'target': int(h5['ids'][argdistances]),
-                       'distance': int(distances)} for distances, argdistances in zipdistances]
-        
+                       'distance': int(distances)}
+                      for distances, argdistances in zipdistances]
+
     else:
         edges_list = [{'source': int(h5['ids'][source]),
                        'target': int(h5['ids'][argdistances]),
-                       'distance': int(distances)} for distances, argdistances in zipdistances]
-    
+                       'distance': int(distances)}
+                      for distances, argdistances in zipdistances]
+
     return edges_list
 
 
 def construct_network(image):
     # Combines nodes and edges list to create a network
     # image refers to uploaded image
-    
+
     # Initializes the node and edge list
     nodes, edges = [], []
 
     # Constructs n nearest neighbors for original image
     image = image_toarray(image)
     dist, argdist = art_neighbors(image)
-    
+
     nodes.append(create_nodes(argdist))
     edges.append(create_edges(dist, argdist))
 
@@ -113,15 +115,14 @@ def construct_network(image):
 def create_json(unique_nodes, edges):
     # Exports nodes and edges to a JSON file for visualization purposes
     # inputs generated from construct_network
-    
+
     nodes_dict, edges_dict = {}, {}
-    
+
     nodes_dict['nodes'] = unique_nodes
     edges_dict['edges'] = edges
-    
+
     dataset = {}
     dataset.update(nodes_dict)
     dataset.update(edges_dict)
 
     return dataset
-
