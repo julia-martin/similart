@@ -1,8 +1,7 @@
-from PIL import Image 
-import json
 import h5py
 import joblib
 import numpy as np
+from PIL import Image 
 from sklearn.neighbors import NearestNeighbors
 
 # Loads image data, reduced numpy representation, and ML model
@@ -12,9 +11,6 @@ pca_model = joblib.load('PCA_Model.joblib')
 
 def image_toarray(im):
     # Converts 300x300x3 Image to flattened numpy array 1x270000 for analysis
-    
-    # If the image is from H5 File
-    # We could remove this if statement if we pull image from the web instead
     if type(im) is np.ndarray:
         im_array = np.array(im).reshape(1,270000)
              
@@ -44,7 +40,7 @@ def art_neighbors(imageArray):
     distances = list(art_neigh[0].flatten())[1:5]
     argdistances = list(art_neigh[1].flatten())[1:5]
     
-    return distances,argdistances
+    return distances, argdistances
 
 
 def create_nodes(argdistances, source = 3000): 
@@ -91,7 +87,7 @@ def construct_network(image):
     
     
     # Initializes the node and edge list
-    nodes, edges = [],[]
+    nodes, edges = [], []
 
     # Constructs n nearest neighbors for original image
     image = image_toarray(image)
@@ -134,15 +130,6 @@ def create_json(unique_nodes,edges):
     dataset = {}
     dataset.update(nodes_dict)
     dataset.update(edges_dict)
-    
-    
-    with open('network.json', 'w') as fout:
-        json.dump(dataset , fout)
         
     return dataset
 
-
-# Demo
-test_image = h5['images'][0]
-unique_nodes, edges = construct_network(test_image)
-create_json(unique_nodes, edges)
