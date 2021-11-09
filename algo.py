@@ -25,7 +25,6 @@ def image_toarray(im):
 
 def art_neighbors(imarray):
     # Uses flattened numpy array to find the 4 closest neighbors
-    # 5 is used in the algo; however if the image is a musueum dataset, the first image will be itself
 
     neigh = NearestNeighbors(n_neighbors=5, algorithm='ball_tree', p=2)
     neigh.fit(converted_data)
