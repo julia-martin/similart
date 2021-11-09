@@ -1,11 +1,11 @@
 import h5py
 import joblib
 import numpy as np
-from PIL import Image 
+from PIL import Image
 from sklearn.neighbors import NearestNeighbors
 
 # Loads image data, reduced numpy representation, and ML model
-h5 = h5py.File('artworks.h5', "r") 
+h5 = h5py.File('artworks.h5', "r")
 converted_data = np.load('PCA_Images.npy')
 pca_model = joblib.load('PCA_Model.joblib')
 
@@ -43,7 +43,7 @@ def art_neighbors(imarray):
     return distances, argdistances
 
 
-def create_nodes(argdistances, source=None): 
+def create_nodes(argdistances, source=None):
     # 0 will be a special ID that refers to the original uploaded image
     # argdistances refer to the closest images
     # source refers to the index of the source image. None refers to uploaded image
@@ -66,12 +66,12 @@ def create_edges(distances, argdistances, source=None):
     zipdistances = zip(distances, argdistances)
     
     if source is None:
-        edges_list = [{'source': 0, 
+        edges_list = [{'source': 0,
                        'target': int(h5['ids'][argdistances]),
                        'distance': int(distances)} for distances, argdistances in zipdistances]
         
     else:
-        edges_list = [{'source': int(h5['ids'][source]), 
+        edges_list = [{'source': int(h5['ids'][source]),
                        'target': int(h5['ids'][argdistances]),
                        'distance': int(distances)} for distances, argdistances in zipdistances]
     
@@ -122,6 +122,6 @@ def create_json(unique_nodes, edges):
     dataset = {}
     dataset.update(nodes_dict)
     dataset.update(edges_dict)
-        
+
     return dataset
 
