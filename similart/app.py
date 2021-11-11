@@ -40,7 +40,7 @@ def process_upload():
 
     img = Image.open(img_file)
     model = Model(img)
-    session['data'] = model.create_network()
+    session['data'] = model.construct_network()
 
     return redirect('/results')
 
@@ -51,7 +51,7 @@ def process_selection():
     img = Image.open(f'./static/images/{img_id}.jpeg')
 
     model = Model(img)
-    session['data'] = model.create_network()
+    session['data'] = model.construct_network()
 
     return redirect('/results')
 

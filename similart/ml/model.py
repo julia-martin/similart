@@ -63,9 +63,9 @@ class Model:
 
         self.network = (unique_nodes, edges)
 
-        json = self._create_json(unique_nodes, edges)
+        graph_data = self._create_graph_data(unique_nodes, edges)
 
-        return json
+        return graph_data
 
     def art_neighbors(self, array_image):
         """Uses flattened numpy array to find the 5 nearest neighbors"""
@@ -124,9 +124,8 @@ class Model:
 
         return edges_list
 
-    def _create_json(self, unique_nodes, edges):
-        # Exports nodes and edges to a JSON file for visualization purposes
-        # inputs generated from construct_network
+    def _create_graph_data(self, unique_nodes, edges):
+        """Returns data as dictionaries for d3 processing"""
 
         nodes_dict, edges_dict = {}, {}
 
