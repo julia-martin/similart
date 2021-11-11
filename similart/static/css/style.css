@@ -79,7 +79,7 @@ figure {
   vertical-align: middle;
 }
 
-input[type='radio'] {
+input[name='selected-work'] {
   display: none;
 }
 
