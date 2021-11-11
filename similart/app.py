@@ -63,6 +63,7 @@ def process_selection():
 @app.route('/quiz', methods=['POST'])
 def process_quiz():
     theme = request.form.getlist('theme')  # noqa: F841
+    art_type = request.form['type']  # noqa: F841
     # TODO: Run ML model and include output in render_template
     session['data'] = DUMMY_DATA
     return redirect('/results')
