@@ -24,7 +24,7 @@ const graphData = {
   "edges": [{"source": 0, "target": 40647, "distance": 12235}, {"source": 0, "target": 88372, "distance": 13208}, {"source": 0, "target": 111295, "distance": 13369}, {"source": 0, "target": 31285, "distance": 13571}, {"source": 40647, "target": 88372, "distance": 10551}, {"source": 40647, "target": 80548, "distance": 12235}, {"source": 40647, "target": 119985, "distance": 12385}, {"source": 40647, "target": 136190, "distance": 12662}, {"source": 88372, "target": 40647, "distance": 10551}, {"source": 88372, "target": 111428, "distance": 11061}, {"source": 88372, "target": 119985, "distance": 11295}, {"source": 88372, "target": 11025, "distance": 11306}, {"source": 111295, "target": 862, "distance": 10281}, {"source": 111295, "target": 136395, "distance": 10670}, {"source": 111295, "target": 72951, "distance": 10734}, {"source": 111295, "target": 196282, "distance": 10745}, {"source": 31285, "target": 20686, "distance": 11891}, {"source": 31285, "target": 88372, "distance": 12413}, {"source": 31285, "target": 15486, "distance": 12803}, {"source": 31285, "target": 40647, "distance": 12940}]
 };
 // console.log(graphData);
-let recImage;
+const recImage = document.getElementById('rec-image');
 
 // D3 graph here
 const width = 1490;
@@ -62,6 +62,13 @@ d3.json('../../data/json/similart_data.json').then((metadata) => {
     .style("stroke", "teal")
     .style("stroke-width", 6);
 
+  // Preview image when hovering on node
+  const nodeImage = svg.append("svg:image")
+    .attr("width", 200)
+    .attr("height", 200)
+    .attr("x", 200 + 100)
+    .attr("y", height - 200);
+
   //Create nodes as circles
   const nodes = svg.selectAll("circle")
     .data(graphData.nodes)
@@ -77,7 +84,7 @@ d3.json('../../data/json/similart_data.json').then((metadata) => {
       const image_id = d["image_id"];
       const part2 = "/full/843,/0/default.jpg";
       const url = part1.concat(image_id, part2);
-      recImage.attr("xlink:href", url);
+      nodeImage.attr("xlink:href", url);
     })
     .on("mouseout", d => d3.select(this).attr("fill", "black"));
 
