@@ -53,10 +53,7 @@ d3.json('static/data/similart_data.json').then((metadata) => {
     .style("stroke", "teal")
     .style("stroke-width", 6);
 
-  // Preview image when hovering on node
-  const nodeImage = svg.append("svg:image")
-    .attr("width", 200)
-    .attr("height", 200);
+  let nodeImage;
 
   // Create nodes as circles
   const nodes = svg.selectAll("circle")
@@ -68,15 +65,21 @@ d3.json('static/data/similart_data.json').then((metadata) => {
       if (d.id === 0) return "crimson";
     })
     .on("mouseover", function(d) {
-      d3.select(this).attr("fill", "goldenrod")
-      const url = genUrl(d["image_id"]);
-      nodeImage.attr("xlink:href", url)
-        .attr("x", d.x)
-        .attr("y", d.y);
+      d3.select(this).attr("fill", "goldenrod");
+      if (d['image_id']) {
+        const url = genUrl(d['image_id']);
+        nodeImage = svg.append("svg:image")
+          .attr("id", "preview-image")
+          .attr("width", 200)
+          .attr("height", 200)
+          .attr("xlink:href", url)
+          .attr("x", d.x)
+          .attr("y", d.y);
+      }
     })
     .on("mouseout", function(d) {
       d3.select(this).attr("fill", "black");
-      nodeImage.attr("xlink:href", null)
+      nodeImage.remove();
     })
     .on("click", d => {
       document.getElementById('rec-image').setAttribute('src', genUrl(d['image_id']));
