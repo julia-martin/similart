@@ -89,7 +89,10 @@ d3.json('static/data/similart_data.json').then((metadata) => {
         .attr("x", d.x)
         .attr("y", d.y);
     })
-    .on("mouseout", function(d) { d3.select(this).attr("fill", "black") })
+    .on("mouseout", function(d) {
+      d3.select(this).attr("fill", "black");
+      nodeImage.attr("xlink:href", null)
+    })
     .on("click", d => {
       document.getElementById('rec-image').setAttribute('src', genUrl(d['image_id']));
       document.getElementById('rec-title').textContent = d['title'];
