@@ -9,11 +9,11 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
   position: relative;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 header, footer {
@@ -162,6 +162,20 @@ button:disabled {
   margin: auto;
 }
 
+line {
+  pointer-events: none;
+}
+
+#d3-container {
+  width: 100%;
+  height: 800px;
+  overflow: auto;
+}
+
+#preview-image {
+  z-index: 1;
+}
+
 #overlay {
   background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
@@ -169,7 +183,7 @@ button:disabled {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 2;
   visibility: hidden;
 }
 
@@ -177,19 +191,20 @@ button:disabled {
   background-color: #B6BBE0;
   border-radius: 10px;
   color: #592AE6;
-  height: 60%;
-  min-height: 600px;
+  font-family: 'Abril Fatface';
+  height: 40%;
+  min-height: 400px;
   width: 80%;
-  min-width: 650px;
+  min-width: 200px;
+  max-width: 600px;
   padding: 20px;
   margin: auto;
   position: absolute;
   left: 0;
   right: 0;
-  top: 0;
-  bottom: 0;
+  top: 100px;
   text-align: center;
-  z-index: 2;
+  z-index: 3;
   visibility: hidden;
 }
 

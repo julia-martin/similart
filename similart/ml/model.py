@@ -91,13 +91,13 @@ class Model:
         # source refers to the index of the source image
 
         nodes_list = [{
-            'image': int(self.h5['ids'][arg])
+            'id': int(self.h5['ids'][arg])
         } for arg in argdistances]
 
         if source is None:
-            nodes_list.append({'image': 0})
+            nodes_list.append({'id': 0})
         else:
-            nodes_list.append({'image': int(self.h5['ids'][source])})
+            nodes_list.append({'id': int(self.h5['ids'][source])})
 
         return nodes_list
 
