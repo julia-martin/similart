@@ -82,14 +82,14 @@ d3.json('static/data/similart_data.json').then((metadata) => {
     .style("fill", d => {
       if (d.image == 0) return "crimson";
     })
-    .on("mouseover", d => {
-      d3.select(this.parentElement).attr("fill", "goldenrod")
+    .on("mouseover", function(d) {
+      d3.select(this).attr("fill", "goldenrod")
       const url = genUrl(d["image_id"]);
       nodeImage.attr("xlink:href", url)
         .attr("x", d.x)
         .attr("y", d.y);
     })
-    .on("mouseout", d => d3.select(this.parentElement).attr("fill", "black"))
+    .on("mouseout", function(d) { d3.select(this).attr("fill", "black") })
     .on("click", d => {
       document.getElementById('rec-image').setAttribute('src', genUrl(d['image_id']));
       document.getElementById('rec-title').textContent = d['title'];
