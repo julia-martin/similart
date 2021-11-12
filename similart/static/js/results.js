@@ -50,7 +50,7 @@ d3.json('static/data/similart_data.json').then((metadata) => {
     .data(graphData.edges)
     .enter()
     .append("line")
-    .style("stroke", "teal")
+    .style("stroke", "#D9F4FF")
     .style("stroke-width", 6);
 
   let nodeImage;
@@ -61,11 +61,9 @@ d3.json('static/data/similart_data.json').then((metadata) => {
     .enter()
     .append("circle")
     .attr("r", 20)
-    .style("fill", d => {
-      if (d.id === 0) return "crimson";
-    })
+    .style("fill", d => d.id === 0 ? "#E080D5" : "#B6BBE0")
     .on("mouseover", function(d) {
-      d3.select(this).attr("fill", "goldenrod");
+      d3.select(this).style("fill", "#592AE6");
       if (d['image_id']) {
         const url = genUrl(d['image_id']);
         nodeImage = svg.append("svg:image")
@@ -78,7 +76,7 @@ d3.json('static/data/similart_data.json').then((metadata) => {
       }
     })
     .on("mouseout", function(d) {
-      d3.select(this).attr("fill", "black");
+      d3.select(this).style("fill", d => d.id === 0 ? "#E080D5" : "#B6BBE0")
       nodeImage.remove();
     })
     .on("click", d => {
