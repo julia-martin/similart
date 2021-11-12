@@ -177,8 +177,8 @@ button:disabled {
   background-color: #B6BBE0;
   border-radius: 10px;
   color: #592AE6;
-  height: 60%;
-  min-height: 600px;
+  height: 40%;
+  min-height: 400px;
   width: 80%;
   min-width: 650px;
   padding: 20px;
@@ -186,8 +186,7 @@ button:disabled {
   position: absolute;
   left: 0;
   right: 0;
-  top: 0;
-  bottom: 0;
+  top: 100px;
   text-align: center;
   z-index: 2;
   visibility: hidden;

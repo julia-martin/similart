@@ -28,6 +28,12 @@ const recImage = document.getElementById('rec-image');
 const width = 1000;
 const height = 700;
 
+function genUrl(imageId) {
+  const part1 = "https://www.artic.edu/iiif/2/";
+  const part2 = "/full/843,/0/default.jpg";
+  return part1.concat(imageId, part2);
+}
+
 d3.json('static/data/similart_data.json').then((metadata) => {
   graphData['nodes'] = graphData['nodes'].map(img => ({ img, ...metadata[img['image'].toString()] }));
   console.log(graphData['nodes']);
@@ -78,13 +84,19 @@ d3.json('static/data/similart_data.json').then((metadata) => {
     })
     .on("mouseover", d => {
       d3.select(this.parentElement).attr("fill", "goldenrod")
-      const part1 = "https://www.artic.edu/iiif/2/";
-      const image_id = d["image_id"];
-      const part2 = "/full/843,/0/default.jpg";
-      const url = part1.concat(image_id, part2);
-      nodeImage.attr("xlink:href", url);
+      const url = genUrl(d["image_id"]);
+      nodeImage.attr("xlink:href", url)
+        .attr("x", d.x)
+        .attr("y", d.y);
     })
-    .on("mouseout", d => d3.select(this.parentElement).attr("fill", "black"));
+    .on("mouseout", d => d3.select(this.parentElement).attr("fill", "black"))
+    .on("click", d => {
+      document.getElementById('rec-image').setAttribute('src', genUrl(d['image_id']));
+      document.getElementById('rec-title').textContent = d['title'];
+      document.getElementById('rec-artist').textContent = `By: ${d['artist_title']}`;
+      document.getElementById('rec-year').textContent = d['date_display'];
+      showArtDetails();
+    });
 
     //Applies force tick
 		forceGraph.on("tick", () => {
