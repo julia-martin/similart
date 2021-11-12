@@ -30,14 +30,14 @@ const recImage = document.getElementById('rec-image');
 const width = 1490;
 const height = 700;
 
-d3.json('../../data/json/similart_data.json').then((metadata) => {
+d3.json('static/data/similart_data.json').then((metadata) => {
   graphData['nodes'] = graphData['nodes'].map(img => ({ img, ...metadata[img['image'].toString()] }));
   console.log(graphData['nodes']);
 
   const forceGraph = d3.forceSimulation(graphData.nodes)
-  .force("charge", d3.forceManyBody().strength(-100))
-  .force("link", d3.forceLink().id(d => d.image))
-  .force("center", d3.forceCenter().x(w / 2).y(h / 2));
+    .force("charge", d3.forceManyBody().strength(-100))
+    .force("link", d3.forceLink().id(d => d.image))
+    .force("center", d3.forceCenter().x(width / 2).y(height / 2));
 
   forceGraph.force("link").links(graphData.edges).distance(d => d.distance / 100);
 
@@ -102,4 +102,4 @@ overlay.addEventListener('click', () => {
 });
 
 // Temporary code to show modal and overlay
-showArtDetails();
+// showArtDetails();
