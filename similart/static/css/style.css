@@ -162,6 +162,12 @@ button:disabled {
   margin: auto;
 }
 
+#d3-container {
+  width: 100%;
+  height: 800px;
+  overflow: auto;
+}
+
 #overlay {
   background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
