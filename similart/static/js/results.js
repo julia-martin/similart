@@ -77,14 +77,14 @@ d3.json('static/data/similart_data.json').then((metadata) => {
       if (d.image == 0) return "crimson";
     })
     .on("mouseover", d => {
-      d3.select(this).attr("fill", "goldenrod")
+      d3.select(this.parentElement).attr("fill", "goldenrod")
       const part1 = "https://www.artic.edu/iiif/2/";
       const image_id = d["image_id"];
       const part2 = "/full/843,/0/default.jpg";
       const url = part1.concat(image_id, part2);
       nodeImage.attr("xlink:href", url);
     })
-    .on("mouseout", d => d3.select(this).attr("fill", "black"));
+    .on("mouseout", d => d3.select(this.parentElement).attr("fill", "black"));
 
     //Applies force tick
 		forceGraph.on("tick", () => {
