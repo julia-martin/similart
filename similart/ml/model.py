@@ -14,7 +14,7 @@ CONVERTED_DATA_PATH = os.path.join(dirname, 'model/PCA_Images.npy')
 
 class Model:
     def __init__(self, image):
-        self._image = image
+        self.image = image
         self.h5 = h5py.File(DATA_PATH, 'r')
         self.pca_model = joblib.load(MODEL_PATH)
         self.converted_data = np.load(CONVERTED_DATA_PATH)
@@ -32,7 +32,7 @@ class Model:
             image = image.resize((300, 300), Image.ANTIALIAS)
             self._image = np.array(image).reshape(1, 270000)
 
-    def construct_network(self, image):
+    def construct_network(self):
         """Combines nodes and edges list to create a network"""
 
         # Initializes the node and edge list
@@ -67,13 +67,13 @@ class Model:
 
         return graph_data
 
-    def art_neighbors(self, array_image):
+    def art_neighbors(self, image):
         """Uses flattened numpy array to find the 5 nearest neighbors"""
 
         neigh = NearestNeighbors(n_neighbors=5, algorithm='ball_tree', p=2)
         neigh.fit(self.converted_data)
 
-        test_data = self.pca_model.transform(array_image)
+        test_data = self.pca_model.transform(image)
         art_neigh = neigh.kneighbors(test_data)
 
         # dist returns the l2 distance between the source and target nodes
