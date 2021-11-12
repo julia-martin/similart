@@ -132,4 +132,7 @@ dmypy.json
 hdf5/
 *.h5
 
+# Model file
+*.joblib
+
 .DS_Store
