@@ -10,10 +10,8 @@ document.onreadystatechange = function() {
     main.style.visibility = "hidden";
     loader.style.display = "block";
   } else {
-    setTimeout(() => {
-      loader.style.display = "none";
-      main.style.visibility = "visible";
-    }, 2000);
+    loader.style.display = "none";
+    main.style.visibility = "visible";
   }
 };
 
@@ -27,7 +25,7 @@ const graphData = {
 const recImage = document.getElementById('rec-image');
 
 // D3 graph here
-const width = 1490;
+const width = 1000;
 const height = 700;
 
 d3.json('static/data/similart_data.json').then((metadata) => {
@@ -39,7 +37,7 @@ d3.json('static/data/similart_data.json').then((metadata) => {
     .force("link", d3.forceLink().id(d => d.image))
     .force("center", d3.forceCenter().x(width / 2).y(height / 2));
 
-  forceGraph.force("link").links(graphData.edges).distance(d => d.distance / 100);
+  // forceGraph.force("link").links(graphData.edges).distance(d => d.distance / 100);
 
   const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -52,10 +50,10 @@ d3.json('static/data/similart_data.json').then((metadata) => {
   const rectangle = svg.append("rect")
     .attr("width", width)
     .attr("height", height)
-    .attr("fill", "cornsilk");
+    .attr("fill", "none");
 
   // Create edges as lines
-	const edges = svg.selectAll("line")
+  const edges = svg.selectAll("line")
     .data(graphData.edges)
     .enter()
     .append("line")
@@ -88,6 +86,16 @@ d3.json('static/data/similart_data.json').then((metadata) => {
     })
     .on("mouseout", d => d3.select(this).attr("fill", "black"));
 
+    //Applies force tick
+		forceGraph.on("tick", () => {
+      edges.attr("x1", d => d.source.x )
+          .attr("y1", d => d.source.y)
+          .attr("x2", d => d.target.x)
+          .attr("y2", d => d.target.y);
+
+      nodes.attr("cx", d => d.x)
+          .attr("cy", d => d.y);
+		});
 });
 // End D3
 
