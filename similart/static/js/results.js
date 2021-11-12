@@ -16,12 +16,9 @@ document.onreadystatechange = function() {
 };
 
 const graphData = JSON.parse(dataElem.dataset.results);
-// const graphData = {
-//   "nodes": [{"id": 111295}, {"id": 862}, {"id": 20686}, {"id": 72951}, {"id": 119985}, {"id": 11025}, {"id": 80548}, {"id": 111428}, {"id": 15486}, {"id": 0}, {"id": 136395}, {"id": 31285}, {"id": 136190}, {"id": 40647}, {"id": 196282}, {"id": 88372}],
-//   "edges": [{"source": 0, "target": 40647, "distance": 12235}, {"source": 0, "target": 88372, "distance": 13208}, {"source": 0, "target": 111295, "distance": 13369}, {"source": 0, "target": 31285, "distance": 13571}, {"source": 40647, "target": 88372, "distance": 10551}, {"source": 40647, "target": 80548, "distance": 12235}, {"source": 40647, "target": 119985, "distance": 12385}, {"source": 40647, "target": 136190, "distance": 12662}, {"source": 88372, "target": 40647, "distance": 10551}, {"source": 88372, "target": 111428, "distance": 11061}, {"source": 88372, "target": 119985, "distance": 11295}, {"source": 88372, "target": 11025, "distance": 11306}, {"source": 111295, "target": 862, "distance": 10281}, {"source": 111295, "target": 136395, "distance": 10670}, {"source": 111295, "target": 72951, "distance": 10734}, {"source": 111295, "target": 196282, "distance": 10745}, {"source": 31285, "target": 20686, "distance": 11891}, {"source": 31285, "target": 88372, "distance": 12413}, {"source": 31285, "target": 15486, "distance": 12803}, {"source": 31285, "target": 40647, "distance": 12940}]
-// };
 console.log(graphData);
-// D3 graph here
+
+// D3 settings
 const width = 1000;
 const height = 800;
 
@@ -61,7 +58,7 @@ d3.json('static/data/similart_data.json').then((metadata) => {
     .attr("width", 200)
     .attr("height", 200);
 
-  //Create nodes as circles
+  // Create nodes as circles
   const nodes = svg.selectAll("circle")
     .data(graphData.nodes)
     .enter()
@@ -89,7 +86,7 @@ d3.json('static/data/similart_data.json').then((metadata) => {
       showArtDetails();
     });
 
-    //Applies force tick
+    // Applies force tick
 		forceGraph.on("tick", () => {
       edges.attr("x1", d => d.source.x )
           .attr("y1", d => d.source.y)
@@ -100,7 +97,6 @@ d3.json('static/data/similart_data.json').then((metadata) => {
           .attr("cy", d => d.y);
 		});
 });
-// End D3
 
 function showArtDetails() {
   overlay.style.visibility = "visible";
