@@ -9,11 +9,11 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
   position: relative;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 header, footer {
@@ -177,10 +177,12 @@ button:disabled {
   background-color: #B6BBE0;
   border-radius: 10px;
   color: #592AE6;
+  font-family: 'Abril Fatface';
   height: 40%;
   min-height: 400px;
   width: 80%;
-  min-width: 650px;
+  min-width: 200px;
+  max-width: 600px;
   padding: 20px;
   margin: auto;
   position: absolute;
