@@ -1,9 +1,9 @@
 import os
 
-import numpy as np
 from flask import Flask, flash, redirect, render_template, request, session
 from PIL import Image
-from skimage import transform
+
+from similart.ml.model import Model
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
@@ -20,11 +20,6 @@ DUMMY_DATA = [
 def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
-def img_to_array(img):
-    npimg = np.array(img)
-    return transform.resize(npimg, [300, 300, 3], preserve_range=True).astype('uint8')
 
 
 @app.route("/", methods=['GET'])
@@ -44,9 +39,9 @@ def process_upload():
         return redirect('/')
 
     img = Image.open(img_file)
-    resized_img = img_to_array(img)  # noqa: F841
-    # TODO: Run ML model and include output in render_template
-    session['data'] = DUMMY_DATA
+    model = Model(img)
+    session['data'] = model.construct_network()
+
     return redirect('/results')
 
 
@@ -54,9 +49,10 @@ def process_upload():
 def process_selection():
     img_id = request.form['selected-work']
     img = Image.open(f'./static/images/{img_id}.jpeg')
-    resized_img = img_to_array(img)  # noqa: F841
-    # TODO: Run ML model and include output in render_template
-    session['data'] = DUMMY_DATA
+
+    model = Model(img)
+    session['data'] = model.construct_network()
+
     return redirect('/results')
 
 
