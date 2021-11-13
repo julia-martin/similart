@@ -78,10 +78,15 @@ class Model:
 
         # dist returns the l2 distance between the source and target nodes
         # argdist returns the target nodes, representede in H5's index
+        nearest_distance = art_neigh[0].flatten()[0]
 
-        # We ignore the first image in the list since it will be itself
-        distances = list(art_neigh[0].flatten())[1:5]
-        argdistances = list(art_neigh[1].flatten())[1:5]
+        # checks if the image is already in the h5 file
+        if nearest_distance < 1000:
+            distances = list(art_neigh[0].flatten())[1:5]
+            argdistances = list(art_neigh[1].flatten())[1:5]
+        else:
+            distances = list(art_neigh[0].flatten())[0:4]
+            argdistances = list(art_neigh[1].flatten())[0:4]
 
         return distances, argdistances
 
