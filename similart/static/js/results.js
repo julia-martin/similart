@@ -87,6 +87,8 @@ d3.json('static/data/similart_data.json').then((metadata) => {
       showArtDetails();
     });
 
+    console.log('test')
+
     // Applies force tick
 		forceGraph.on("tick", () => {
       edges.attr("x1", d => d.source.x )
