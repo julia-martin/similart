@@ -17,7 +17,6 @@ document.onreadystatechange = function() {
 
 const graphData = JSON.parse(dataElem.dataset.results);
 console.log(graphData);
-console.log('hi');
 
 // D3 settings
 const width = 1000;
