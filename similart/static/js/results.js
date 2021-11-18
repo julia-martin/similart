@@ -18,6 +18,7 @@ document.onreadystatechange = function() {
 const graphData = JSON.parse(dataElem.dataset.results);
 console.log(graphData);
 
+
 // D3 settings
 const width = 1000;
 const height = 800;
@@ -87,8 +88,7 @@ d3.json('static/data/similart_data.json').then((metadata) => {
       showArtDetails();
     });
 
-    console.log('test')
-
+    
     // Applies force tick
 		forceGraph.on("tick", () => {
       edges.attr("x1", d => d.source.x )
