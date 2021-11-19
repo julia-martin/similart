@@ -1,5 +1,3 @@
-import os
-
 from flask import Flask, flash, redirect, render_template, request, session
 from PIL import Image
 
@@ -7,8 +5,8 @@ from similart.ml.model import Model
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = os.urandom(12).hex()
+app = Flask(__name__, instance_relative_config=True)
+app.config.from_object('similart.config')
 
 DUMMY_DATA = [
     {"title": "Mona Lisa", "artist": "Leonardo Da Vinci", "category": "Classical", "year": 1400},
