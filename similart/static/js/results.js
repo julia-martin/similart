@@ -22,6 +22,36 @@ console.log(graphData);
 const width = 1000;
 const height = 800;
 
+
+//add legend elements
+const svg_legend = d3.select("#d3-container")
+  .append("svg")
+  .attr("width", width)
+  .attr("height", height/10);
+
+svg_legend.append("text")
+  .text("Uploaded or Chosen Image")
+  .attr("x", 50)
+  .attr("y", 25);
+
+svg_legend.append("text")
+  .text("Recommended Image")
+  .attr("x", 50)
+  .attr("y", 55);
+
+svg_legend.append("circle")
+  .attr("cx", 20)
+  .attr("cy", 20)
+  .attr("r", 10)
+  .attr("fill", "#E080D5")
+
+svg_legend.append("circle")
+  .attr("cx", 20)
+  .attr("cy", 50)
+  .attr("r", 10)
+  .attr("fill", "#B6BBE0")
+
+
 function genUrl(imageId) {
   return `https://www.artic.edu/iiif/2/${imageId}/full/843,/0/default.jpg`;
 }
@@ -33,12 +63,18 @@ d3.json('static/data/similart_data.json').then((metadata) => {
   const forceGraph = d3.forceSimulation(graphData.nodes)
     .force("charge", d3.forceManyBody().strength(-100))
     .force("link", d3.forceLink().id(d => d.id))
-    .force("center", d3.forceCenter().x(width / 2).y(height / 2));
+    .force("center", d3.forceCenter().x(width / 2).y(height / 2))
+    .force("collide", d3.forceCollide(30).iterations(10))
+    .force('radial', d3.forceRadial(function(d) {
+      if (d.id === 0){
+        return d.id
+      }else{
+        return 300
+      }
+    }, width / 2, height / 2));
 
   forceGraph.force("link").links(graphData.edges).distance(d => d.distance / 100);
-
-  const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
-
+  
   // Create SVG element
   const svg = d3.select("#d3-container")
     .append("svg")
@@ -87,7 +123,16 @@ d3.json('static/data/similart_data.json').then((metadata) => {
       showArtDetails();
     });
 
-    
+    const labels = svg.selectAll("text")
+      .data(graphData.nodes)
+      .enter()
+      .append("text")
+      .text(function(d){
+        return d.artist_title || 'Unknown';
+      })
+      .style("text-anchor", "middle")
+      .attr("pointer-events", "none");
+
     // Applies force tick
 		forceGraph.on("tick", () => {
       edges.attr("x1", d => d.source.x )
@@ -97,8 +142,12 @@ d3.json('static/data/similart_data.json').then((metadata) => {
 
       nodes.attr("cx", d => d.x)
           .attr("cy", d => d.y);
+
+      labels.attr("x", d => d.x)
+          .attr("y", d => d.y - 25);
 		});
 });
+
 
 function showArtDetails() {
   overlay.style.visibility = "visible";
