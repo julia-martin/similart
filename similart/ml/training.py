@@ -7,7 +7,7 @@ dirname = os.path.dirname(__file__)
 DATA_PATH = os.path.join(dirname, '../data/hdf5/artworks.h5')
 
 
-class Train_Model:
+class TrainModel:
     def _init_(self):
         self.h5 = h5py.File(DATA_PATH, 'r')
 
