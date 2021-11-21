@@ -1,6 +1,8 @@
 import os
 
 import h5py
+import joblib
+import numpy as np
 from sklearn.decomposition import PCA
 from sklearn.manifold import Isomap
 
@@ -10,6 +12,7 @@ DATA_PATH = os.path.join(dirname, '../data/hdf5/artworks.h5')
 
 class TrainModel:
     def _init_(self):
+
         self.h5 = h5py.File(DATA_PATH, 'r')
 
     def pca_train(self):
@@ -20,9 +23,7 @@ class TrainModel:
         train_data = self.h5['images'][:n].reshape(n, 270000)
         converted_data = pca.fit_transform(train_data)
 
-        # Creates files
-        # joblib.dump(pca, "model/PCA_Model.joblib")
-        # np.save("model/PCA_Images.npy", converted_data)
+        self._write_model_files(pca, converted_data)
 
         # Returns 283 dimensions
         num_dimensions = converted_data.shape()[1]
@@ -41,3 +42,8 @@ class TrainModel:
         num_dimensions = converted_data.shape()[1]
 
         return num_dimensions
+
+    def _write_model_files(self, pca, converted_data):
+
+        joblib.dump(pca, 'model/PCA_Model.joblib')
+        np.save('model/PCA_Images.npy', converted_data)
