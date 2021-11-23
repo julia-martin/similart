@@ -2,6 +2,7 @@ from flask import Flask, flash, redirect, render_template, request, session
 from PIL import Image
 
 from similart.ml.model import Model
+from similart.quiz import get_graph_data
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
@@ -58,8 +59,7 @@ def process_selection():
 def process_quiz():
     theme = request.form.getlist('theme')  # noqa: F841
     art_type = request.form['type']  # noqa: F841
-    # TODO: Run ML model and include output in render_template
-    session['data'] = DUMMY_DATA
+    session['data'] = get_graph_data(theme, art_type)
     return redirect('/results')
 
 
