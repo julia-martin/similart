@@ -41,7 +41,7 @@ a {
   text-decoration: none;
 }
 
-#intro {
+#intro, #result-blurb {
   background-color: #D9F4FF;
   color: #E080D5;
   font-weight: 600;
@@ -136,22 +136,6 @@ button:hover {
 
 button:disabled {
   opacity: 50%;
-}
-
-#loader {
-  border: 12px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 12px solid #444444;
-  display: none;
-  width: 70px;
-  height: 70px;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  100% {
-      transform: rotate(360deg);
-  }
 }
 
 .center {
