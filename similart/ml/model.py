@@ -85,8 +85,8 @@ class Model:
             distances = list(art_neigh[0].flatten())[1:num_neighbors]
             argdistances = list(art_neigh[1].flatten())[1:num_neighbors]
         else:
-            distances = list(art_neigh[0].flatten())[0:num_neighbors-1]
-            argdistances = list(art_neigh[1].flatten())[0:num_neighbors-1]
+            distances = list(art_neigh[0].flatten())[0:num_neighbors - 1]
+            argdistances = list(art_neigh[1].flatten())[0:num_neighbors - 1]
 
         return distances, argdistances
 
