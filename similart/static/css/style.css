@@ -200,6 +200,7 @@ line {
   padding: 20px;
   margin: auto;
   position: absolute;
+  overflow: scroll;
   left: 0;
   right: 0;
   top: 100px;
