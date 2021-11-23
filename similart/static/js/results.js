@@ -80,7 +80,7 @@ d3.json("static/data/similart_data.json").then((metadata) => {
         .x(WIDTH / 2)
         .y(HEIGHT / 2)
     )
-    .force("collide", d3.forceCollide(30).iterations(10))
+    .force("collide", d3.forceCollide(40).iterations(5))
     .force(
       "radial",
       d3.forceRadial((d) => (d.id === 0 ? d.id : 300), WIDTH / 2, HEIGHT / 2)
@@ -88,8 +88,7 @@ d3.json("static/data/similart_data.json").then((metadata) => {
 
   forceGraph
     .force("link")
-    .links(graphData.edges)
-    .distance((d) => d.distance / 150);
+    .links(graphData.edges);
 
   // Create SVG element
   const svg = d3
