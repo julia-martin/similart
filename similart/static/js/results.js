@@ -152,9 +152,7 @@ d3.json("static/data/similart_data.json").then((metadata) => {
     .data(graphData.nodes)
     .enter()
     .append("text")
-    .text(function (d) {
-      return d.artist_title || "Unknown";
-    })
+    .text((d) => (d.id > 0 ? d.artist_title || "Unknown" : ""))
     .style("text-anchor", "middle")
     .attr("pointer-events", "none");
 
@@ -166,11 +164,11 @@ d3.json("static/data/similart_data.json").then((metadata) => {
       .attr("x2", (d) => d.target.x)
       .attr("y2", (d) => d.target.y);
 
-    nodes.attr("cx", (d) => Math.max(RADIUS, Math.min(WIDTH - RADIUS, d.x)))
+    nodes
+      .attr("cx", (d) => Math.max(RADIUS, Math.min(WIDTH - RADIUS, d.x)))
       .attr("cy", (d) => Math.max(RADIUS, Math.min(HEIGHT - RADIUS, d.y)));
 
-    labels.attr("x", (d) => d.x)
-      .attr("y", (d) => d.y - 25);
+    labels.attr("x", (d) => d.x).attr("y", (d) => d.y - 25);
   });
 });
 
