@@ -39,7 +39,7 @@ class Model:
         nodes, edges = [], []
 
         # Constructs n nearest neighbors for original image
-        dist, argdist = self.art_neighbors(self.image)
+        dist, argdist = self.art_neighbors(self.image, 8)
 
         nodes.append(self.create_nodes(argdist))
         edges.append(self.create_edges(dist, argdist))
@@ -48,7 +48,7 @@ class Model:
         for arg in argdist:
             input_image = self.h5['images'][arg]
             array_image = Model.image_to_array(input_image)
-            dist, argdist = self.art_neighbors(array_image)
+            dist, argdist = self.art_neighbors(array_image, 3)
 
             nodes.append(self.create_nodes(argdist, arg))
             edges.append(self.create_edges(dist, argdist, arg))
@@ -67,10 +67,10 @@ class Model:
 
         return graph_data
 
-    def art_neighbors(self, image):
-        """Uses flattened numpy array to find the 5 nearest neighbors"""
+    def art_neighbors(self, image, num_neighbors):
+        """Uses flattened numpy array to find the nearest neighbors"""
 
-        neigh = NearestNeighbors(n_neighbors=5, algorithm='ball_tree', p=2)
+        neigh = NearestNeighbors(n_neighbors=num_neighbors, algorithm='ball_tree', p=2)
         neigh.fit(self.converted_data)
 
         test_data = self.pca_model.transform(image)
@@ -82,11 +82,11 @@ class Model:
 
         # checks if the image is already in the h5 file
         if nearest_distance < 1000:
-            distances = list(art_neigh[0].flatten())[1:5]
-            argdistances = list(art_neigh[1].flatten())[1:5]
+            distances = list(art_neigh[0].flatten())[1:num_neighbors]
+            argdistances = list(art_neigh[1].flatten())[1:num_neighbors]
         else:
-            distances = list(art_neigh[0].flatten())[0:4]
-            argdistances = list(art_neigh[1].flatten())[0:4]
+            distances = list(art_neigh[0].flatten())[0:num_neighbors-1]
+            argdistances = list(art_neigh[1].flatten())[0:num_neighbors-1]
 
         return distances, argdistances
 

@@ -10,45 +10,12 @@ const graphData = JSON.parse(dataElem.dataset.results);
 // D3 settings
 const WIDTH = 1000;
 const HEIGHT = 600;
-const RADIUS = 20;
+const NODE_DIM = 60;
 const PREVIEW_DIM = 200;
 
 function genUrl(imageId) {
   return `https://www.artic.edu/iiif/2/${imageId}/full/843,/0/default.jpg`;
 }
-
-// Add legend elements
-const svg_legend = d3
-  .select("#d3-container")
-  .append("svg")
-  .attr("width", WIDTH)
-  .attr("height", 80);
-
-svg_legend
-  .append("text")
-  .text("Uploaded or Chosen Image")
-  .attr("x", 50)
-  .attr("y", 25);
-
-svg_legend
-  .append("text")
-  .text("Recommended Image")
-  .attr("x", 50)
-  .attr("y", 55);
-
-svg_legend
-  .append("circle")
-  .attr("cx", 20)
-  .attr("cy", 20)
-  .attr("r", 10)
-  .attr("fill", "#E080D5");
-
-svg_legend
-  .append("circle")
-  .attr("cx", 20)
-  .attr("cy", 50)
-  .attr("r", 10)
-  .attr("fill", "#B6BBE0");
 
 d3.json("static/data/similart_data.json").then((metadata) => {
   graphData["nodes"] = graphData["nodes"].map((img) => ({
@@ -70,15 +37,13 @@ d3.json("static/data/similart_data.json").then((metadata) => {
         .x(WIDTH / 2)
         .y(HEIGHT / 2)
     )
-    .force("collide", d3.forceCollide(40).iterations(5))
+    .force("collide", d3.forceCollide(NODE_DIM).iterations(5))
     .force(
       "radial",
       d3.forceRadial((d) => (d.id === 0 ? d.id : 300), WIDTH / 2, HEIGHT / 2)
     );
 
-  forceGraph
-    .force("link")
-    .links(graphData.edges);
+  forceGraph.force("link").links(graphData.edges);
 
   // Create SVG element
   const svg = d3
@@ -97,14 +62,19 @@ d3.json("static/data/similart_data.json").then((metadata) => {
     .style("stroke-width", 6);
 
   let nodeImage;
-  // Create nodes as circles
+  // Create nodes as images
   const nodes = svg
-    .selectAll("circle")
+    .selectAll(".nodes")
     .data(graphData.nodes)
     .enter()
-    .append("circle")
-    .attr("r", RADIUS)
-    .style("fill", (d) => (d.id === 0 ? "#E080D5" : "#B6BBE0"))
+    .append("image")
+    .attr("width", NODE_DIM)
+    .attr("height", NODE_DIM)
+    .attr("xlink:href", function (d) {
+      if (d.id === 0) {
+        return null;
+      } else return genUrl(d["image_id"]);
+    })
     .on("mouseover", function (d) {
       d3.select(this).style("fill", "#592AE6");
       if (d["image_id"]) {
@@ -115,8 +85,8 @@ d3.json("static/data/similart_data.json").then((metadata) => {
           .attr("width", PREVIEW_DIM)
           .attr("height", PREVIEW_DIM)
           .attr("xlink:href", url)
-          .attr("x", d.x)
-          .attr("y", Math.min(HEIGHT - PREVIEW_DIM, d.y));
+          .attr("x", WIDTH - PREVIEW_DIM - 100)
+          .attr("y", HEIGHT / 2);
       }
     })
     .on("mouseout", function (d) {
@@ -139,16 +109,6 @@ d3.json("static/data/similart_data.json").then((metadata) => {
       }
     });
 
-  const labels = svg
-    .selectAll("text")
-    .data(graphData.nodes)
-    .enter()
-    .append("text")
-    .text((d) => (d.id > 0 ? d.artist_title || "Unknown" : ""))
-    .style("text-anchor", "middle")
-    .style("font-size", "14px")
-    .attr("pointer-events", "none");
-
   // Applies force tick
   forceGraph.on("tick", () => {
     edges
@@ -158,10 +118,16 @@ d3.json("static/data/similart_data.json").then((metadata) => {
       .attr("y2", (d) => d.target.y);
 
     nodes
-      .attr("cx", (d) => Math.max(RADIUS, Math.min(WIDTH - RADIUS, d.x)))
-      .attr("cy", (d) => Math.max(RADIUS, Math.min(HEIGHT - RADIUS, d.y)));
-
-    labels.attr("x", (d) => d.x).attr("y", (d) => d.y - 25);
+      .attr(
+        "x",
+        (d) =>
+          Math.max(NODE_DIM, Math.min(WIDTH - NODE_DIM, d.x)) - NODE_DIM / 2
+      )
+      .attr(
+        "y",
+        (d) =>
+          Math.max(NODE_DIM, Math.min(HEIGHT - NODE_DIM, d.y)) - NODE_DIM / 2
+      );
   });
 });
 
