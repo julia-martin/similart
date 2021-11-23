@@ -16,23 +16,23 @@ document.onreadystatechange = function () {
 };
 
 const graphData = JSON.parse(dataElem.dataset.results);
-console.log(graphData);
+
+// D3 settings
+const WIDTH = 1000;
+const HEIGHT = 600;
+const RADIUS = 20;
+const PREVIEW_DIM = 200;
 
 function genUrl(imageId) {
   return `https://www.artic.edu/iiif/2/${imageId}/full/843,/0/default.jpg`;
 }
-
-// D3 settings
-const WIDTH = 1000;
-const HEIGHT = 800;
-const RADIUS = 20;
 
 // Add legend elements
 const svg_legend = d3
   .select("#d3-container")
   .append("svg")
   .attr("width", WIDTH)
-  .attr("height", HEIGHT / 10);
+  .attr("height", 80);
 
 svg_legend
   .append("text")
@@ -40,7 +40,11 @@ svg_legend
   .attr("x", 50)
   .attr("y", 25);
 
-svg_legend.append("text").text("Recommended Image").attr("x", 50).attr("y", 55);
+svg_legend
+  .append("text")
+  .text("Recommended Image")
+  .attr("x", 50)
+  .attr("y", 55);
 
 svg_legend
   .append("circle")
@@ -61,7 +65,6 @@ d3.json("static/data/similart_data.json").then((metadata) => {
     ...img,
     ...metadata[img["id"].toString()],
   }));
-  // console.log(graphData["nodes"]);
 
   const forceGraph = d3
     .forceSimulation(graphData.nodes)
@@ -86,7 +89,7 @@ d3.json("static/data/similart_data.json").then((metadata) => {
   forceGraph
     .force("link")
     .links(graphData.edges)
-    .distance((d) => d.distance / 100);
+    .distance((d) => d.distance / 150);
 
   // Create SVG element
   const svg = d3
@@ -120,11 +123,11 @@ d3.json("static/data/similart_data.json").then((metadata) => {
         nodeImage = svg
           .append("svg:image")
           .attr("id", "preview-image")
-          .attr("width", 200)
-          .attr("height", 200)
+          .attr("width", PREVIEW_DIM)
+          .attr("height", PREVIEW_DIM)
           .attr("xlink:href", url)
           .attr("x", d.x)
-          .attr("y", d.y);
+          .attr("y", Math.min(HEIGHT - PREVIEW_DIM, d.y));
       }
     })
     .on("mouseout", function (d) {
@@ -154,6 +157,7 @@ d3.json("static/data/similart_data.json").then((metadata) => {
     .append("text")
     .text((d) => (d.id > 0 ? d.artist_title || "Unknown" : ""))
     .style("text-anchor", "middle")
+    .style("font-size", "14px")
     .attr("pointer-events", "none");
 
   // Applies force tick
