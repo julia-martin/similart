@@ -18,16 +18,21 @@ document.onreadystatechange = function () {
 const graphData = JSON.parse(dataElem.dataset.results);
 console.log(graphData);
 
-// D3 settings
-const width = 1000;
-const height = 800;
+function genUrl(imageId) {
+  return `https://www.artic.edu/iiif/2/${imageId}/full/843,/0/default.jpg`;
+}
 
-//add legend elements
+// D3 settings
+const WIDTH = 1000;
+const HEIGHT = 800;
+const RADIUS = 20;
+
+// Add legend elements
 const svg_legend = d3
   .select("#d3-container")
   .append("svg")
-  .attr("width", width)
-  .attr("height", height / 10);
+  .attr("width", WIDTH)
+  .attr("height", HEIGHT / 10);
 
 svg_legend
   .append("text")
@@ -51,16 +56,12 @@ svg_legend
   .attr("r", 10)
   .attr("fill", "#B6BBE0");
 
-function genUrl(imageId) {
-  return `https://www.artic.edu/iiif/2/${imageId}/full/843,/0/default.jpg`;
-}
-
 d3.json("static/data/similart_data.json").then((metadata) => {
   graphData["nodes"] = graphData["nodes"].map((img) => ({
     ...img,
     ...metadata[img["id"].toString()],
   }));
-  console.log(graphData["nodes"]);
+  // console.log(graphData["nodes"]);
 
   const forceGraph = d3
     .forceSimulation(graphData.nodes)
@@ -73,23 +74,13 @@ d3.json("static/data/similart_data.json").then((metadata) => {
       "center",
       d3
         .forceCenter()
-        .x(width / 2)
-        .y(height / 2)
+        .x(WIDTH / 2)
+        .y(HEIGHT / 2)
     )
     .force("collide", d3.forceCollide(30).iterations(10))
     .force(
       "radial",
-      d3.forceRadial(
-        function (d) {
-          if (d.id === 0) {
-            return d.id;
-          } else {
-            return 300;
-          }
-        },
-        width / 2,
-        height / 2
-      )
+      d3.forceRadial((d) => (d.id === 0 ? d.id : 300), WIDTH / 2, HEIGHT / 2)
     );
 
   forceGraph
@@ -101,8 +92,8 @@ d3.json("static/data/similart_data.json").then((metadata) => {
   const svg = d3
     .select("#d3-container")
     .append("svg")
-    .attr("width", width)
-    .attr("height", height);
+    .attr("width", WIDTH)
+    .attr("height", HEIGHT);
 
   // Create edges as lines
   const edges = svg
@@ -114,14 +105,13 @@ d3.json("static/data/similart_data.json").then((metadata) => {
     .style("stroke-width", 6);
 
   let nodeImage;
-
   // Create nodes as circles
   const nodes = svg
     .selectAll("circle")
     .data(graphData.nodes)
     .enter()
     .append("circle")
-    .attr("r", 20)
+    .attr("r", RADIUS)
     .style("fill", (d) => (d.id === 0 ? "#E080D5" : "#B6BBE0"))
     .on("mouseover", function (d) {
       d3.select(this).style("fill", "#592AE6");
@@ -141,18 +131,20 @@ d3.json("static/data/similart_data.json").then((metadata) => {
       d3.select(this).style("fill", (d) =>
         d.id === 0 ? "#E080D5" : "#B6BBE0"
       );
-      nodeImage.remove();
+      if (nodeImage) nodeImage.remove();
     })
     .on("click", (d) => {
-      document
-        .getElementById("rec-image")
-        .setAttribute("src", genUrl(d["image_id"]));
-      document.getElementById("rec-title").textContent = d["title"];
-      document.getElementById("rec-artist").textContent = `By: ${
-        d["artist_title"] || "Unknown"
-      }`;
-      document.getElementById("rec-year").textContent = d["date_display"];
-      showArtDetails();
+      if (d["image_id"]) {
+        document
+          .getElementById("rec-image")
+          .setAttribute("src", genUrl(d["image_id"]));
+        document.getElementById("rec-title").textContent = d["title"];
+        document.getElementById("rec-artist").textContent = `By: ${
+          d["artist_title"] || "Unknown"
+        }`;
+        document.getElementById("rec-year").textContent = d["date_display"];
+        showArtDetails();
+      }
     });
 
   const labels = svg
@@ -174,9 +166,11 @@ d3.json("static/data/similart_data.json").then((metadata) => {
       .attr("x2", (d) => d.target.x)
       .attr("y2", (d) => d.target.y);
 
-    nodes.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
+    nodes.attr("cx", (d) => Math.max(RADIUS, Math.min(WIDTH - RADIUS, d.x)))
+      .attr("cy", (d) => Math.max(RADIUS, Math.min(HEIGHT - RADIUS, d.y)));
 
-    labels.attr("x", (d) => d.x).attr("y", (d) => d.y - 25);
+    labels.attr("x", (d) => d.x)
+      .attr("y", (d) => d.y - 25);
   });
 });
 
