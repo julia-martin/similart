@@ -23,6 +23,7 @@ header, footer {
 }
 
 .title, .subtitle {
+  color: white;
   font-family: 'Abril Fatface';
 }
 
