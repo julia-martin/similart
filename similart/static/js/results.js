@@ -5,16 +5,6 @@ const container = document.getElementById("d3-container");
 const modal = document.getElementById("modal");
 const overlay = document.getElementById("overlay");
 
-document.onreadystatechange = function () {
-  if (document.readyState !== "complete") {
-    main.style.visibility = "hidden";
-    loader.style.display = "block";
-  } else {
-    loader.style.display = "none";
-    main.style.visibility = "visible";
-  }
-};
-
 const graphData = JSON.parse(dataElem.dataset.results);
 
 // D3 settings
