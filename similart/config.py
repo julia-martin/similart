@@ -1,3 +1,1 @@
-import os
-
-SECRET_KEY = os.urandom(12).hex()
+SECRET_KEY = '0923cf82b026b543da9d4d44'
