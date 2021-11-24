@@ -7,7 +7,8 @@ from similart.ml.model import Model
 from similart.quiz import get_graph_data
 
 app = Flask(__name__, instance_relative_config=True)
-app.config.from_object('similart.config')
+# app.config.from_object('similart.config')
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', None)
 port = int(os.environ.get("PORT", 5000))
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
