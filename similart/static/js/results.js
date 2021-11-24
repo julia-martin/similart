@@ -24,7 +24,7 @@ d3.json("static/data/similart_data.json").then((metadata) => {
 
   const forceGraph = d3
     .forceSimulation(graphData.nodes)
-    .force("charge", d3.forceManyBody().strength(-100))
+    .force("charge", d3.forceManyBody().strength(-10))
     .force(
       "link",
       d3.forceLink().id((d) => d.id)
@@ -39,7 +39,7 @@ d3.json("static/data/similart_data.json").then((metadata) => {
     .force("collide", d3.forceCollide(NODE_DIM).iterations(5))
     .force(
       "radial",
-      d3.forceRadial((d) => (d.id === 0 ? d.id : 300), WIDTH / 2, HEIGHT / 2)
+      d3.forceRadial((d) => (d.id === 0 ? d.id : 50), WIDTH / 2, HEIGHT / 2)
     );
 
   forceGraph.force("link").links(graphData.edges);
