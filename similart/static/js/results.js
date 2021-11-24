@@ -11,7 +11,6 @@ const graphData = JSON.parse(dataElem.dataset.results);
 const WIDTH = 1000;
 const HEIGHT = 600;
 const NODE_DIM = 60;
-const PREVIEW_DIM = 200;
 
 function genUrl(imageId) {
   return `https://www.artic.edu/iiif/2/${imageId}/full/843,/0/default.jpg`;
@@ -61,7 +60,6 @@ d3.json("static/data/similart_data.json").then((metadata) => {
     .style("stroke", "#D9F4FF")
     .style("stroke-width", 6);
 
-  let nodeImage;
   // Create nodes as images
   const nodes = svg
     .selectAll(".nodes")
@@ -74,26 +72,6 @@ d3.json("static/data/similart_data.json").then((metadata) => {
       if (d.id === 0) {
         return null;
       } else return genUrl(d["image_id"]);
-    })
-    .on("mouseover", function (d) {
-      d3.select(this).style("fill", "#592AE6");
-      if (d["image_id"]) {
-        const url = genUrl(d["image_id"]);
-        nodeImage = svg
-          .append("svg:image")
-          .attr("id", "preview-image")
-          .attr("width", PREVIEW_DIM)
-          .attr("height", PREVIEW_DIM)
-          .attr("xlink:href", url)
-          .attr("x", WIDTH - PREVIEW_DIM - 100)
-          .attr("y", HEIGHT / 2);
-      }
-    })
-    .on("mouseout", function (d) {
-      d3.select(this).style("fill", (d) =>
-        d.id === 0 ? "#E080D5" : "#B6BBE0"
-      );
-      if (nodeImage) nodeImage.remove();
     })
     .on("click", (d) => {
       if (d["image_id"]) {

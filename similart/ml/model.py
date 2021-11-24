@@ -30,6 +30,8 @@ class Model:
             self._image = np.array(image).reshape(1, 270000)
         else:
             image = image.resize((300, 300), Image.ANTIALIAS)
+            if (np.array(image).shape[2]) == 4:
+                image = image.convert('RGB')
             self._image = np.array(image).reshape(1, 270000)
 
     def construct_network(self):
