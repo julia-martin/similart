@@ -57,8 +57,8 @@ def process_selection():
 
 @app.route('/quiz', methods=['POST'])
 def process_quiz():
-    theme = request.form.getlist('theme')  # noqa: F841
-    art_type = request.form['type']  # noqa: F841
+    theme = request.form.getlist('theme')
+    art_type = request.form['type']
     session['data'] = get_graph_data(theme, art_type)
     return redirect('/results')
 

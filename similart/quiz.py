@@ -2,32 +2,10 @@ import json
 import random
 
 
-def rename_words(checkboxes):
-    # rename words in checkboxes to match words in json
-    for i, b in enumerate(checkboxes):
-        if b == 'still-life':
-            checkboxes[i] = 'still'
-        if b == 'architecture':
-            checkboxes[i] = 'arch'
-        if b == 'death-war-violence':
-            checkboxes[i] = 'war'
-        if b == 'mythology-monsters':
-            checkboxes[i] = 'myth'
-
-    return checkboxes
-
-
 def set_num_nodes(checkboxes):
-    if len(checkboxes) == 1:
-        num_nodes = 10
-    elif len(checkboxes) == 2:
-        num_nodes = 8
-    elif len(checkboxes) == 3:
-        num_nodes = 6
-    elif len(checkboxes) == 4:
-        num_nodes = 5
-    elif len(checkboxes) in [5, 6, 7]:
-        num_nodes = 4
+    checkbox_to_nodes = {1: 10, 2: 8, 3: 6, 4: 5, 5: 4, 6: 4, 7: 4}
+    if len(checkboxes) in checkbox_to_nodes:
+        num_nodes = checkbox_to_nodes[len(checkboxes)]
     else:
         num_nodes = 3
 
@@ -53,7 +31,7 @@ def get_shuffled_json(category):
 
 
 def get_graph_data(checkboxes, category):
-    checkboxes = rename_words(checkboxes)
+    distance = 1000
     num_nodes = set_num_nodes(checkboxes)
     shuffled_keys, json_obj = get_shuffled_json(category)
     graph_data = {'nodes': [], 'edges': []}
@@ -70,7 +48,7 @@ def get_graph_data(checkboxes, category):
                 else:
                     if {'id': k} not in graph_data['nodes']:
                         graph_data['nodes'].append({'id': k})
-                    graph_data['edges'].append({'source': center_node, 'target': k, 'distance': 10000})
+                    graph_data['edges'].append({'source': center_node, 'target': k, 'distance': distance})
                 count += 1
 
             if count == num_nodes:
