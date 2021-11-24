@@ -1,13 +1,16 @@
+import os
+
 from flask import Flask, flash, redirect, render_template, request, session
 from PIL import Image
 
 from similart.ml.model import Model
 from similart.quiz import get_graph_data
 
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
-
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_object('similart.config')
+port = int(os.environ.get("PORT", 5000))
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 
 def allowed_file(filename):
@@ -61,3 +64,6 @@ def process_quiz():
 def results():
     results_data = session['data']
     return render_template('results.html.jinja', results_data=results_data)
+
+
+app.run(host='0.0.0.0', port=port, debug=True)
