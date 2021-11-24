@@ -16,15 +16,17 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-header, footer {
-  background-color: #B780F5;
+header,
+footer {
+  background-color: #b780f5;
   color: white;
   padding: 20px;
 }
 
-.title, .subtitle {
+.title,
+.subtitle {
   color: white;
-  font-family: 'Abril Fatface';
+  font-family: "Abril Fatface";
 }
 
 .subtitle {
@@ -41,36 +43,38 @@ a {
   text-decoration: none;
 }
 
-#intro, #result-blurb {
-  background-color: #D9F4FF;
-  color: #E080D5;
+#intro,
+#result-blurb {
+  background-color: #d9f4ff;
+  color: #e080d5;
   font-weight: 600;
   padding: 20px;
 }
 
 .instruction {
-  color: #B780F5;
+  color: #b780f5;
   text-align: center;
 }
 
 fieldset {
-  border: 1px dashed #B6BBE0;
+  border: 1px dashed #b6bbe0;
   margin: 20px 0px;
   text-align: center;
 }
 
 legend {
-  color: #592AE6;
+  color: #592ae6;
   font-weight: bold;
   padding: 10px;
 }
 
-input[type='checkbox'], input[type='file'] {
+input[type="checkbox"],
+input[type="file"] {
   margin: 5px;
 }
 
 figure {
-  border: 1px solid #B6BBE0;;
+  border: 1px solid #b6bbe0;
   display: inline-block;
   margin: 10px;
   padding: 10px;
@@ -80,7 +84,7 @@ figure {
   vertical-align: middle;
 }
 
-input[name='selected-work'] {
+input[name="selected-work"] {
   display: none;
 }
 
@@ -118,7 +122,7 @@ label img:hover {
 }
 
 button {
-  background-color: #B780F5;
+  background-color: #b780f5;
   border: none;
   border-radius: 10px;
   color: white;
@@ -129,7 +133,7 @@ button {
 }
 
 button:hover {
-  background-color: #592AE6;
+  background-color: #592ae6;
   color: white;
   cursor: pointer;
 }
@@ -173,10 +177,10 @@ line {
 }
 
 #modal {
-  background-color: #B6BBE0;
+  background-color: #b6bbe0;
   border-radius: 10px;
-  color: #592AE6;
-  font-family: 'Abril Fatface';
+  color: #592ae6;
+  font-family: "Abril Fatface";
   height: 40%;
   min-height: 400px;
   width: 80%;
