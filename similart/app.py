@@ -59,7 +59,7 @@ def process_selection():
     return redirect('/results')
 
 
-@ app.route('/quiz', methods=['POST'])
+@app.route('/quiz', methods=['POST'])
 def process_quiz():
     theme = request.form.getlist('theme')
     art_type = request.form['type']
@@ -67,7 +67,7 @@ def process_quiz():
     return redirect('/results')
 
 
-@ app.route('/results', methods=['GET'])
+@app.route('/results', methods=['GET'])
 def results():
 
     results_data = session['data']
