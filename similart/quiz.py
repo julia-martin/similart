@@ -1,4 +1,5 @@
 import json
+import os
 import random
 
 
@@ -14,7 +15,10 @@ def set_num_nodes(checkboxes):
 
 def get_shuffled_json(category):
     # Read in json file
-    json_file = open('static/data/similart_data.json', encoding='utf-8')
+    dirname = os.path.dirname(__file__)
+
+    json_file = open(os.path.join(
+        dirname, 'static/data/similart_data.json'), encoding='utf-8')
     json_obj = json.load(json_file)
 
     # 1. randomly shuffle the json keys
@@ -23,9 +27,11 @@ def get_shuffled_json(category):
 
     # 2. filter on category
     if category == 'contemporary':
-        shuffled_keys = [k for k in shuffled_keys if 'modern and contemporary art' in json_obj[k]['classification_titles']]
+        shuffled_keys = [
+            k for k in shuffled_keys if 'modern and contemporary art' in json_obj[k]['classification_titles']]
     elif category == 'traditional':
-        shuffled_keys = [k for k in shuffled_keys if 'modern and contemporary art' not in json_obj[k]['classification_titles']]
+        shuffled_keys = [
+            k for k in shuffled_keys if 'modern and contemporary art' not in json_obj[k]['classification_titles']]
 
     return shuffled_keys, json_obj
 
@@ -48,7 +54,8 @@ def get_graph_data(checkboxes, category):
                 else:
                     if {'id': k} not in graph_data['nodes']:
                         graph_data['nodes'].append({'id': k})
-                    graph_data['edges'].append({'source': center_node, 'target': k, 'distance': distance})
+                    graph_data['edges'].append(
+                        {'source': center_node, 'target': k, 'distance': distance})
                 count += 1
 
             if count == num_nodes:

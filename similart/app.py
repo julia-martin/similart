@@ -1,5 +1,4 @@
 import os
-import secrets
 
 from flask import Flask, flash, redirect, render_template, request, session
 from PIL import Image
@@ -9,7 +8,7 @@ from similart.quiz import get_graph_data
 
 app = Flask(__name__, instance_relative_config=True)
 
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', secrets.token_hex(16))
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', None)
 port = int(os.environ.get("PORT", 5000))
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -46,8 +45,11 @@ def process_upload():
 @app.route('/select', methods=['POST'])
 def process_selection():
     img_id = request.form['selected-work']
-    img = Image.open(os.path.join(os.path.dirname(__file__),
-                     'static/images/{}.jpeg'.format(img_id)))
+
+    print('image id is {}'.format(img_id))
+
+    img = Image.open(os.path.join(os.path.dirname(
+        __file__), 'static/images/{}.jpeg'.format(img_id)))
 
     model = Model(img)
     session['data'] = model.construct_network()
@@ -57,7 +59,7 @@ def process_selection():
     return redirect('/results')
 
 
-@app.route('/quiz', methods=['POST'])
+@ app.route('/quiz', methods=['POST'])
 def process_quiz():
     theme = request.form.getlist('theme')
     art_type = request.form['type']
@@ -67,6 +69,7 @@ def process_quiz():
 
 @ app.route('/results', methods=['GET'])
 def results():
+
     results_data = session['data']
     return render_template('results.html.jinja', results_data=results_data)
 
