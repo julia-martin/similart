@@ -1,4 +1,5 @@
 import os
+import secrets
 
 from flask import Flask, flash, redirect, render_template, request, session
 from PIL import Image
@@ -7,8 +8,8 @@ from similart.ml.model import Model
 from similart.quiz import get_graph_data
 
 app = Flask(__name__, instance_relative_config=True)
-# app.config.from_object('similart.config')
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', None)
+
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', secrets.token_hex(16))
 port = int(os.environ.get("PORT", 5000))
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -45,10 +46,13 @@ def process_upload():
 @app.route('/select', methods=['POST'])
 def process_selection():
     img_id = request.form['selected-work']
-    img = Image.open(f'./static/images/{img_id}.jpeg')
+    img = Image.open(os.path.join(os.path.dirname(__file__),
+                     'static/images/{}.jpeg'.format(img_id)))
 
     model = Model(img)
     session['data'] = model.construct_network()
+
+    print(session['data'])
 
     return redirect('/results')
 
@@ -61,7 +65,7 @@ def process_quiz():
     return redirect('/results')
 
 
-@app.route('/results', methods=['GET'])
+@ app.route('/results', methods=['GET'])
 def results():
     results_data = session['data']
     return render_template('results.html.jinja', results_data=results_data)
