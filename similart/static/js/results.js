@@ -79,9 +79,8 @@ d3.json("static/data/similart_data.json").then((metadata) => {
           .getElementById("rec-image")
           .setAttribute("src", genUrl(d["image_id"]));
         document.getElementById("rec-title").textContent = d["title"];
-        document.getElementById("rec-artist").textContent = `By: ${
-          d["artist_title"] || "Unknown"
-        }`;
+        document.getElementById("rec-artist").textContent = `By: ${d["artist_title"] || "Unknown"
+          }`;
         document.getElementById("rec-year").textContent = d["date_display"];
         showArtDetails();
       }

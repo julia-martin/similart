@@ -7,7 +7,7 @@ from similart.ml.model import Model
 from similart.quiz import get_graph_data
 
 app = Flask(__name__, instance_relative_config=True)
-# app.config.from_object('similart.config')
+
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', None)
 port = int(os.environ.get("PORT", 5000))
 
@@ -45,7 +45,9 @@ def process_upload():
 @app.route('/select', methods=['POST'])
 def process_selection():
     img_id = request.form['selected-work']
-    img = Image.open(f'./static/images/{img_id}.jpeg')
+
+    img = Image.open(os.path.join(os.path.dirname(
+        __file__), 'static/images/{}.jpeg'.format(img_id)))
 
     model = Model(img)
     session['data'] = model.construct_network()
@@ -63,6 +65,7 @@ def process_quiz():
 
 @app.route('/results', methods=['GET'])
 def results():
+
     results_data = session['data']
     return render_template('results.html.jinja', results_data=results_data)
 
