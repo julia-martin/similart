@@ -47,9 +47,9 @@ class ImageIngestor:
         dirname = os.path.dirname(__file__)
         art_data = os.path.join(dirname, 'csv', 'art-data.csv')
 
-        with open(art_data, 'w+', newline='', encoding='utf-8') as csvfile:
+        with open(art_data, 'r', newline='') as csvfile:
             filereader = csv.reader(csvfile, delimiter=',')
-
+            next(filereader)
             for idx, row in enumerate(filereader):
                 if idx == self.num_imgs:
                     break
