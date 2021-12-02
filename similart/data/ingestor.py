@@ -8,10 +8,12 @@ import h5py
 from skimage import io, transform
 
 IMG_URL = 'https://www.artic.edu/iiif/2/{}/full/843,/0/default.jpg'
+DIR_NAME = os.path.dirname(__file__)
+DATA_PATH = os.path.join(DIR_NAME, 'hdf5')
 
 
 class ImageIngestor:
-    def __init__(self, path='hdf5/', num_imgs=3000, num_pixels=300):
+    def __init__(self, path=DATA_PATH, num_imgs=3000, num_pixels=300):
         self.path = Path(path)
         self.num_imgs = num_imgs
         self.num_pixels = num_pixels
@@ -44,8 +46,7 @@ class ImageIngestor:
 
     def ingest_data(self):
 
-        dirname = os.path.dirname(__file__)
-        art_data = os.path.join(dirname, 'csv', 'art-data.csv')
+        art_data = os.path.join(DIR_NAME, 'csv', 'art-data.csv')
 
         with open(art_data, 'r', newline='', encoding='utf-8') as csvfile:
             filereader = csv.reader(csvfile, delimiter=',')
