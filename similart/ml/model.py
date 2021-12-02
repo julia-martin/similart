@@ -7,9 +7,9 @@ from PIL import Image
 from sklearn.neighbors import NearestNeighbors
 
 dirname = os.path.dirname(__file__)
-DATA_PATH = os.path.join(dirname, '../data/hdf5/artworks.h5')
-MODEL_PATH = os.path.join(dirname, 'model/PCA_Model.joblib')
-CONVERTED_DATA_PATH = os.path.join(dirname, 'model/PCA_Images.npy')
+DATA_PATH = os.path.join(dirname, os.pardir, 'data', 'hdf5', 'artworks.h5')
+MODEL_PATH = os.path.join(dirname, 'model', 'PCA_Model.joblib')
+CONVERTED_DATA_PATH = os.path.join(dirname, 'model', 'PCA_Images.npy')
 
 
 class Model:
@@ -72,7 +72,8 @@ class Model:
     def art_neighbors(self, image, num_neighbors):
         """Uses flattened numpy array to find the nearest neighbors"""
 
-        neigh = NearestNeighbors(n_neighbors=num_neighbors, algorithm='ball_tree', p=2)
+        neigh = NearestNeighbors(
+            n_neighbors=num_neighbors, algorithm='ball_tree', p=2)
         neigh.fit(self.converted_data)
 
         test_data = self.pca_model.transform(image)

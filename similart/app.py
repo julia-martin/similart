@@ -47,7 +47,7 @@ def process_selection():
     img_id = request.form['selected-work']
 
     img = Image.open(os.path.join(os.path.dirname(
-        __file__), 'static/images/{}.jpeg'.format(img_id)))
+        __file__), 'static', 'images', '{}.jpeg'.format(img_id)))
 
     model = Model(img)
     session['data'] = model.construct_network()

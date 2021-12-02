@@ -33,21 +33,22 @@ def run():
 
     dirname = path.dirname(__file__)
 
-    data_location = path.join(dirname, 'data/hdf5/artworks.h5')
-    model_location = path.join(dirname, 'ml/model/PCA_model.joblib')
+    data_location = path.join(
+        dirname, path.join('data', 'hdf5', 'artworks.h5'))
+    model_location = path.join(dirname, 'ml', 'model', 'PCA_model.joblib')
 
     if not path.exists(data_location):
         ingest_data()
     if not path.exists(model_location):
         build_model()
 
-    os.environ['FLASK_APP'] = 'similart/app.py'
+    os.environ['FLASK_APP'] = os.path.join('similart', 'app.py')
     os.environ['SECRET_KEY'] = secrets.token_hex(16)
 
     os.system('flask run')
 
 
-@click.command()
+@ click.command()
 def refresh():
     """Re-downloads data and trains model, regardless of presence of files"""
 
