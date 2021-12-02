@@ -7,7 +7,7 @@ from sklearn.decomposition import PCA
 from sklearn.manifold import Isomap
 
 dirname = os.path.dirname(__file__)
-DATA_PATH = os.path.join(dirname, '../data/hdf5/artworks.h5')
+DATA_PATH = os.path.join(dirname, os.pardir, 'data', 'hdf5', 'artworks.h5')
 
 
 class Trainer:
@@ -39,5 +39,5 @@ class Trainer:
 
     def _write_model_files(self, model, converted_data):
 
-        joblib.dump(model, 'model/PCA_Model.joblib')
-        np.save('model/PCA_Images.npy', converted_data)
+        joblib.dump(model, os.path.join(dirname, 'model', 'PCA_Model.joblib'))
+        np.save(os.path.join(dirname, 'model', 'PCA_Images.npy'), converted_data)
