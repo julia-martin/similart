@@ -18,7 +18,7 @@ def get_shuffled_json(category):
     dirname = os.path.dirname(__file__)
 
     json_file = open(os.path.join(
-        dirname, 'static/data/similart_data.json'), encoding='utf-8')
+        dirname, 'static', 'data', 'similart_data.json'), encoding='utf-8')
     json_obj = json.load(json_file)
 
     # 1. randomly shuffle the json keys
