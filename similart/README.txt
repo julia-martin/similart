@@ -14,7 +14,7 @@ INSTALLATION
 
 Similart is packaged according to PEP-518 guidelines and is available to be installed via pip from GitHub:
 
-pip install git+ssh://git@github.com/samuelhallam/similart.git
+pip install git+https://github.com/samuelhallam/similart.git
 
 To initialize run 'similart run' after install, this will ingest data and train the model if needed.
 To re-ingest and re-train the model you can also run 'similart ingest' which will replace the model and data files
