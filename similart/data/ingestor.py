@@ -1,6 +1,5 @@
 import csv
 import os
-import signal
 import time
 from pathlib import Path
 from urllib import error
@@ -9,13 +8,6 @@ import h5py
 from skimage import io, transform
 
 IMG_URL = 'https://www.artic.edu/iiif/2/{}/full/843,/0/default.jpg'
-
-
-def handler():
-    raise TimeoutError('Timed out')
-
-
-signal.signal(signal.SIGALRM, handler)
 
 
 class ImageIngestor:
@@ -63,16 +55,12 @@ class ImageIngestor:
                     break
                 i_id, url_id = row[:2]
                 try:
-                    signal.alarm(5)
                     image_array = self._get_img(url_id)
-                    self._reset_alarm()
                     print('Success: {}'.format(idx))
                 except (ValueError, TimeoutError, error.URLError):
-                    self._reset_alarm()
                     print('Unable to get img for {}, skipping'.format(url_id))
                     continue
                 except error.HTTPError:
-                    self._reset_alarm()
                     print('Encountered HTTP Error, continuing in 5 seconds')
                     time.sleep(5)
                     continue
@@ -95,10 +83,6 @@ class ImageIngestor:
         image = io.imread(img_url)
 
         return image
-
-    def _reset_alarm(self):
-
-        signal.alarm(0)
 
 
 if __name__ == '__main__':
