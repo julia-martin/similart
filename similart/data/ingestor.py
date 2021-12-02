@@ -45,7 +45,7 @@ class ImageIngestor:
     def ingest_data(self):
 
         dirname = os.path.dirname(__file__)
-        art_data = os.path.join(dirname, 'csv/art-data.csv')
+        art_data = os.path.join(dirname, 'csv', 'art-data.csv')
 
         with open(art_data, newline='') as csvfile:
             filereader = csv.reader(csvfile, delimiter=',')
@@ -88,7 +88,7 @@ class ImageIngestor:
 if __name__ == '__main__':
 
     dirname = os.path.dirname(__file__)
-    db_path = os.path.join(dirname, 'hdf5/')
+    db_path = os.path.join(dirname, 'hdf5')
 
     ingestor = ImageIngestor(path=db_path)
     ingestor.ingest()
