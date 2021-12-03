@@ -12,13 +12,17 @@ line interface to handle data ingestion, model training and launching the web ap
 
 INSTALLATION
 
+Similart is built for Python 3.9.0, compatibility with other versions is not guaranteed.
+
 Similart is packaged according to PEP-518 guidelines and is available to be installed via pip from GitHub:
 
 pip install git+https://github.com/samuelhallam/similart.git
 
-To initialize run 'similart run' after install, this will ingest data and train the model if needed.
-To re-ingest and re-train the model you can also run 'similart ingest' which will replace the model and data files
-regardless of whether they are present.
+To initialize run 'similart run' after install from your terminal/command prompt of choice, this will ingest data and train the model if needed. Ingestion will take
+roughly one hour, training will take approximiately five minutes.
+
+To re-ingest and re-train the model you can also run 'similart refresh' which will replace the model and data files
+regardless of whether they had been previously created.
 
 EXECUTION
 
