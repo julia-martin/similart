@@ -11,7 +11,7 @@ DATA_PATH = os.path.join(dirname, os.pardir, 'data', 'hdf5', 'artworks.h5')
 
 
 class Trainer:
-    def _init_(self):
+    def __init__(self):
 
         self.h5 = h5py.File(DATA_PATH, 'r')
 
