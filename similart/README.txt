@@ -26,6 +26,6 @@ regardless of whether they had been previously created.
 
 EXECUTION
 
-Once launched, the app will be running default on port 5000. Navigate to http://127.0.0.1:5000 in your browser of
+Once launched, the app will be running by default on port 5000. Navigate to http://127.0.0.1:5000 in your browser of
 choice and the application is ready to be used. Input images can be entered in any of the three ways listed
 in the description section. A recommendation graph will be shown shortly after submission.
