@@ -42,7 +42,7 @@ class ImageIngestor:
             'images', (self.num_imgs, self.num_pixels, self.num_pixels, 3),
             int_type)
         self.idset = self.hdf_file.create_dataset('ids', (self.num_imgs, 1),
-                                                  int_type)
+                                                  'i')
 
     def ingest_data(self):
 
