@@ -42,7 +42,7 @@ def run():
     if not path.exists(model_location):
         build_model()
 
-    os.environ['FLASK_APP'] = os.path.join('similart', 'app.py')
+    os.environ['FLASK_APP'] = os.path.join(dirname, 'app.py')
     os.environ['SECRET_KEY'] = secrets.token_hex(16)
 
     os.system('flask run')
