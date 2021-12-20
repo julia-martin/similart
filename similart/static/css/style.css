@@ -218,8 +218,9 @@ button:disabled {
 }
 
 #d3-container {
+  background: linear-gradient(0deg, var(--color-blue-300), var(--color-blue-100),hsl(0deg 0% 100%));
+  border-radius: 10px;
   width: 100%;
-  height: 700px;
   overflow: scroll;
 }
 
@@ -285,7 +286,7 @@ line {
 }
 
 footer {
-  background-color: var(--color-indigo-100);
+  background-color: var(--color-blue-100);
   font-size: 0.8rem;
 }
 

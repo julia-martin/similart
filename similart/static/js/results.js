@@ -9,8 +9,8 @@ const closeModalBtn = document.getElementById("close-modal-btn");
 const graphData = JSON.parse(dataElem.dataset.results);
 
 // D3 settings
-const WIDTH = 1000;
-const HEIGHT = 600;
+const WIDTH = 1200;
+const HEIGHT = 1000;
 const NODE_DIM = 60;
 
 function genUrl(imageId) {
@@ -58,7 +58,7 @@ d3.json("static/data/similart_data.json").then((metadata) => {
     .data(graphData.edges)
     .enter()
     .append("line")
-    .style("stroke", "#D9F4FF")
+    .style("stroke", "#6366f1")
     .style("stroke-width", 6);
 
   // Create nodes as images
