@@ -109,14 +109,34 @@ d3.json("static/data/similart_data.json").then((metadata) => {
   });
 });
 
+function getPrefersReducedMotion() {
+  const mediaQueryList = window.matchMedia(
+    '(prefers-reduced-motion: no-preference)'
+  );
+  const prefersReducedMotion = !mediaQueryList.matches;
+  return prefersReducedMotion;
+}
+
 function showArtDetails() {
   overlay.style.visibility = "visible";
-  modal.style.visibility = "visible";
+  modal.style.transform = "translateY(0)";
+
+  if (!getPrefersReducedMotion()) {
+    overlay.style.animation = "fadeIn 500ms linear forwards";
+  } else {
+    overlay.style.opacity = "100%";
+  }
 }
 
 function closeModal() {
+  modal.style.transform = "translateY(100%)";
   overlay.style.visibility = "hidden";
-  modal.style.visibility = "hidden";
+
+  if (!getPrefersReducedMotion()) {
+    overlay.style.animation = "fadeOut 500ms linear forwards";
+  } else {
+    overlay.style.opacity = "0%";
+  }
 }
 
 overlay.addEventListener("click", closeModal);

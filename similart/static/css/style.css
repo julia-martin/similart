@@ -231,6 +231,7 @@ line {
   z-index: 2;
 }
 
+/* Overlay and Modal */
 #overlay {
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
@@ -242,6 +243,7 @@ line {
   height: 100%;
   z-index: 2;
   visibility: hidden;
+  opacity: 0;
 }
 
 #modal {
@@ -261,7 +263,6 @@ line {
   right: 0;
   top: 100px;
   text-align: center;
-  visibility: hidden;
 }
 
 #close-modal-btn {
@@ -288,9 +289,39 @@ footer {
   font-size: 0.8rem;
 }
 
-/* Mobile styles */
+/* Media queries */
 @media (max-width: 550px) {
   .subtitle {
     font-size: 1rem;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 100%;
+  }
+  to {
+    opacity: 0%;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  #overlay {
+    will-change: transform;
+    transition: visibility 500ms linear;
+  }
+
+  #modal {
+    will-change: transform;
+    transform: translateY(100%);
+    transition: transform 500ms;
   }
 }
