@@ -5,9 +5,9 @@ const inputs = document.querySelectorAll("input");
 function handleRadioButton(e) {
   radioBtns.forEach(input => {
     if (input.checked) {
-      input.parentElement.style.backgroundColor = 'lavenderblush';
+      input.parentElement.style.borderWidth = '3px';
     } else {
-      input.parentElement.style.backgroundColor = 'transparent';
+      input.parentElement.style.borderWidth = '1px';
     }
   });
 }
@@ -23,7 +23,7 @@ function validateFile(fileInput, filePath) {
 }
 
 function showPreview(e) {
-  let fileInput = document.getElementById('user-submission');
+  let fileInput = document.getElementById('file-upload');
   let filePath = fileInput.value;
   if (!validateFile(fileInput, filePath)) return;
 
@@ -47,4 +47,4 @@ function checkValidity(e) {
 // Attach event listeners
 radioBtns.forEach(input => input.addEventListener('change', handleRadioButton));
 inputs.forEach(input => input.addEventListener('change', checkValidity));
-document.getElementById('user-submission').addEventListener('change', showPreview);
+document.getElementById('file-upload').addEventListener('change', showPreview);

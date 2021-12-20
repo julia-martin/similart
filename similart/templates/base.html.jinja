@@ -5,14 +5,17 @@
     <meta charset='utf-8'>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Philosopher:ital@1&family=Raleway&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./static/css/reset.css">
     <link rel="stylesheet" href="./static/css/style.css">
     <script type="text/javascript" src="../static/js/lib/d3.v5.min.js"></script>
   </head>
   <body>
     <header>
-      <a href="/"><h1 class='title'>Similart &#127912;</h1></a>
-      <h2 class='subtitle'>Discover your new favorite artworks and become an art connoisseur</h2>
+      <a href="/">
+        <div class='logo-container'><img id="logo" src="../static/images/Logo.png" alt="Similart"/></div>
+      </a>
+      <h2 class='subtitle'>Similart - Discover your new favorite artworks and become an art connoisseur</h2>
     </header>
     <main>
       {% block content %}{% endblock %}
@@ -20,23 +23,23 @@
     <footer>
       Image data provided by the Art Institute of Chicago
     </footer>
-    <div id="modal">
-      <div id="rec-image-section">
-        <figure>
+    <div id="overlay">
+      <div id="modal">
+        <button id="close-modal-btn"><img src="./static/icons/icons8-close.svg" alt="Close Modal"/></button>
+        <div id="rec-image-section">
           <img src="../static/images/1.jpeg" alt="example" id="rec-image"/>
-        </figure>
-      </div>
-      <div>
-        <h2 id="rec-title">Title</h2>
-      </div>
-      <div>
-        <h3 id="rec-artist">Artist</h3>
-      </div>
-      <div>
-        <h3 id="rec-year">Year</h3>
+        </div>
+        <div>
+          <h2 id="rec-title">Title</h2>
+        </div>
+        <div>
+          <h3 id="rec-artist">Artist</h3>
+        </div>
+        <div>
+          <h3 id="rec-year">Year</h3>
+        </div>
       </div>
     </div>
-    <div id="overlay"></div>
     {% block script %}{% endblock %}
   </body>
 </html>

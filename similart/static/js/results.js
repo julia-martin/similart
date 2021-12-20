@@ -4,12 +4,13 @@ const dataElem = document.getElementById("data-container");
 const container = document.getElementById("d3-container");
 const modal = document.getElementById("modal");
 const overlay = document.getElementById("overlay");
+const closeModalBtn = document.getElementById("close-modal-btn");
 
 const graphData = JSON.parse(dataElem.dataset.results);
 
 // D3 settings
-const WIDTH = 1000;
-const HEIGHT = 600;
+const WIDTH = 1200;
+const HEIGHT = 1000;
 const NODE_DIM = 60;
 
 function genUrl(imageId) {
@@ -57,7 +58,7 @@ d3.json("static/data/similart_data.json").then((metadata) => {
     .data(graphData.edges)
     .enter()
     .append("line")
-    .style("stroke", "#D9F4FF")
+    .style("stroke", "#6366f1")
     .style("stroke-width", 6);
 
   // Create nodes as images
@@ -108,12 +109,35 @@ d3.json("static/data/similart_data.json").then((metadata) => {
   });
 });
 
-function showArtDetails() {
-  overlay.style.visibility = "visible";
-  modal.style.visibility = "visible";
+function getPrefersReducedMotion() {
+  const mediaQueryList = window.matchMedia(
+    '(prefers-reduced-motion: no-preference)'
+  );
+  const prefersReducedMotion = !mediaQueryList.matches;
+  return prefersReducedMotion;
 }
 
-overlay.addEventListener("click", () => {
+function showArtDetails() {
+  overlay.style.visibility = "visible";
+  modal.style.transform = "translateY(0)";
+
+  if (!getPrefersReducedMotion()) {
+    overlay.style.animation = "fadeIn 500ms linear forwards";
+  } else {
+    overlay.style.opacity = "100%";
+  }
+}
+
+function closeModal() {
+  modal.style.transform = "translateY(100%)";
   overlay.style.visibility = "hidden";
-  modal.style.visibility = "hidden";
-});
+
+  if (!getPrefersReducedMotion()) {
+    overlay.style.animation = "fadeOut 500ms linear forwards";
+  } else {
+    overlay.style.opacity = "0%";
+  }
+}
+
+overlay.addEventListener("click", closeModal);
+closeModalBtn.addEventListener("click", closeModal);

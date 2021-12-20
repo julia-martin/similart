@@ -1,58 +1,85 @@
-/* Color Theme Idea
-* purple: #B780F5
-* rose: #E080D5
-* bluegrey: #B6BBE0
-* skyblue: #D9F4FF
-* dark purple: #592AE6
-*/
-
-* {
-  margin: 0;
-  padding: 0;
+html {
+  --color-gray-light: #e5e7eb;
+  --color-gray-dark: #4b5563;
+  --color-blue-100: #e0f2fe;
+  --color-blue-300: #7dd3fc;
+  --color-blue-500: #0ea5e9;
+  --color-blue-900: #0c4a6e;
+  --color-indigo-100: #e0e7ff;
+  --color-indigo-500: #6366f1;
+  --color-indigo-700: #4338ca;
+  --shadow-low-indigo: 2px 2px 4px hsl(226deg 100% 94% / 0.8);
+  --shadow-med: 4px 4px 6px hsl(0deg 0% 0% / 0.4);
+  --shadow-med-blue: 4px 4px 6px	hsl(204deg 94% 50% / 0.4);
+  --shadow-high: 6px 6px 8px hsl(0deg 0% 0% / 0.3);
 }
 
 body {
   position: relative;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Raleway', sans-serif;
+  background-color: white;
+}
+
+/* Header styles */
+.logo-container {
+  display: inline-block;
+}
+
+#logo {
+  display: block;
+  width: 100px;
 }
 
 header,
 footer {
-  background-color: #b780f5;
-  color: white;
   padding: 20px;
 }
 
-.title,
-.subtitle {
-  color: white;
-  font-family: "Abril Fatface";
-}
-
-.subtitle {
-  font-style: italic;
-}
-
-main {
-  background-color: #fafafa;
-  padding: 20px;
-  min-height: 100vh;
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 a {
   text-decoration: none;
 }
 
-#intro,
-#result-blurb {
-  background-color: #d9f4ff;
-  color: #e080d5;
+.subtitle, .blurb {
+  color: var(--color-gray-dark);
+}
+
+.subtitle {
+  font-family: 'Philosopher', 'Raileway', sans-serif;
+  display: inline;
+}
+
+/* Main */
+main {
+  /* background-color: #fafafa; */
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.blurb {
+  background-color: var(--color-blue-100);
+  border-radius: 8px;
   font-weight: 600;
   padding: 20px;
+  margin-bottom: 50px;
+  box-shadow: var(--shadow-med-blue);
+  text-align: center;
+}
+
+.container {
+  margin-bottom: 60px;
+  padding-top: 10px;
+  text-align: center;
 }
 
 .instruction {
-  color: #b780f5;
+  color: var(--color-gray-dark);
   text-align: center;
 }
 
@@ -63,7 +90,7 @@ fieldset {
 }
 
 legend {
-  color: #592ae6;
+  color: var(--color-indigo-700);
   font-weight: bold;
   padding: 10px;
 }
@@ -73,15 +100,48 @@ input[type="file"] {
   margin: 5px;
 }
 
-figure {
-  border: 1px solid #b6bbe0;
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+/* Hide file input element to add custom styles */
+input[type="file"] {
+  position: absolute;
+  left: -99999rem;
+}
+
+.file-upload-label {
+  border-radius: 4px;
+  color: var(--color-gray-dark);
+  font-weight: bold;
+  background-color: var(--color-gray-light);
+  box-shadow: var(--shadow-high);
+  display: inline-block;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+
+.file-upload-label:hover,
+#input-file:focus + .file-upload-label {
+  background-color: var(--color-blue-300);
+}
+
+.artworks figure {
+  border: 1px solid var(--color-indigo-100);
   display: inline-block;
   margin: 10px;
-  padding: 10px;
   height: 300px;
   width: 300px;
   text-align: center;
   vertical-align: middle;
+  box-shadow: var(--shadow-low-indigo);
 }
 
 input[name="selected-work"] {
@@ -96,21 +156,16 @@ input[name="selected-work"] {
   vertical-align: middle;
 }
 
+.artworks label:hover {
+  cursor: pointer;
+}
+
 img {
   max-height: 90%;
   max-width: 90%;
   margin: 0 auto;
 }
 
-label img:hover {
-  cursor: pointer;
-}
-
-.container {
-  margin-top: 30px;
-  padding-top: 20px;
-  text-align: center;
-}
 
 #image-preview {
   text-align: center;
@@ -122,7 +177,7 @@ label img:hover {
 }
 
 button {
-  background-color: #b780f5;
+  background-color: var(--color-indigo-500);
   border: none;
   border-radius: 10px;
   color: white;
@@ -130,10 +185,11 @@ button {
   font-size: 20px;
   padding: 10px 20px;
   margin: 20px auto;
+  box-shadow: var(--shadow-med);
 }
 
-button:hover {
-  background-color: #592ae6;
+button:hover, button:active {
+  background-color: var(--color-indigo-700);
   color: white;
   cursor: pointer;
 }
@@ -151,58 +207,113 @@ button:disabled {
   margin: auto;
 }
 
-line {
-  pointer-events: none;
+#d3-container {
+  background: linear-gradient(0deg, var(--color-blue-300), var(--color-blue-100),hsl(0deg 0% 100%));
+  border-radius: 10px;
+  width: 100%;
+  overflow: scroll;
 }
 
-#d3-container {
-  width: 100%;
-  height: 700px;
-  overflow: scroll;
+line {
+  pointer-events: none;
 }
 
 #preview-image {
   z-index: 2;
 }
 
+/* Overlay and Modal */
 #overlay {
-  background-color: rgba(0, 0, 0, 0.5);
-  position: absolute;
+  background-color: hsla(0deg 0% 0% / 0.7);
+  position: fixed;
   top: 0;
   left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
   height: 100%;
   z-index: 2;
   visibility: hidden;
+  opacity: 0;
 }
 
 #modal {
-  background-color: #b6bbe0;
+  background-color: var(--color-blue-100);
   border-radius: 10px;
-  color: #592ae6;
-  font-family: "Abril Fatface";
-  height: 40%;
+  color: var(--color-gray-dark);
+  height: 80vh;
   min-height: 400px;
   width: 80%;
   min-width: 200px;
-  max-width: 600px;
+  max-width: 1000px;
   padding: 20px;
   margin: auto;
   position: absolute;
-  overflow: scroll;
+  overflow: auto;
   left: 0;
   right: 0;
   top: 100px;
   text-align: center;
-  z-index: 3;
-  visibility: hidden;
+  box-shadow: var(--shadow-high);
 }
 
-.rec-image img {
-  max-height: 100%;
+#close-modal-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background-color: transparent;
+  box-shadow: none;
+  margin: 0;
+}
+
+#rec-image-section {
+  height: 70%;
+}
+
+#rec-image {
+  height: 100%;
   max-width: 100%;
+  object-fit: cover;
 }
 
 footer {
+  background-color: var(--color-blue-100);
   font-size: 0.8rem;
+}
+
+/* Media queries */
+@media (max-width: 550px) {
+  .subtitle {
+    font-size: 1rem;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 100%;
+  }
+  to {
+    opacity: 0%;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  #overlay {
+    will-change: transform;
+    transition: visibility 500ms linear;
+  }
+
+  #modal {
+    will-change: transform;
+    transform: translateY(100%);
+    transition: transform 500ms;
+  }
 }
