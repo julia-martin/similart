@@ -144,7 +144,7 @@ input[type="file"] {
   background-color: var(--color-blue-300);
 }
 
-figure {
+.artworks figure {
   border: 1px solid var(--color-indigo-100);
   display: inline-block;
   margin: 10px;
@@ -243,15 +243,14 @@ line {
 }
 
 #modal {
-  background-color: #b6bbe0;
+  background-color: var(--color-blue-100);
   border-radius: 10px;
-  color: #592ae6;
-  font-family: "Abril Fatface";
-  height: 40%;
+  color: var(--color-gray-dark);
+  height: 80vh;
   min-height: 400px;
   width: 80%;
   min-width: 200px;
-  max-width: 600px;
+  max-width: 1000px;
   padding: 20px;
   margin: auto;
   position: absolute;
@@ -264,9 +263,14 @@ line {
   visibility: hidden;
 }
 
-.rec-image img {
-  max-height: 100%;
+#rec-image-section {
+  height: 70%;
+}
+
+#rec-image {
+  height: 100%;
   max-width: 100%;
+  object-fit: cover;
 }
 
 footer {
