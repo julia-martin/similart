@@ -1,16 +1,3 @@
-/* Color Theme Idea
-* purple: #B780F5
-* rose: #E080D5
-* bluegrey: #B6BBE0
-* skyblue: #D9F4FF
-* dark purple: #592AE6
-*/
-
-* {
-  margin: 0;
-  padding: 0;
-}
-
 html {
   --color-gray-light: #e5e7eb;
   --color-gray-dark: #4b5563;
@@ -21,7 +8,9 @@ html {
   --color-indigo-100: #e0e7ff;
   --color-indigo-500: #6366f1;
   --color-indigo-700: #4338ca;
-  --shadow-med: 4px 4px 6px hsl(0deg 0% 0% / 0.5);
+  --shadow-low-indigo: 2px 2px 4px hsl(226deg 100% 94% / 0.8);
+  --shadow-med: 4px 4px 6px hsl(0deg 0% 0% / 0.4);
+  --shadow-med-blue: 4px 4px 6px	hsl(204deg 94% 50% / 0.4);
   --shadow-high: 6px 6px 8px hsl(0deg 0% 0% / 0.3);
 }
 
@@ -79,7 +68,7 @@ main {
   font-weight: 600;
   padding: 20px;
   margin-bottom: 50px;
-  box-shadow: var(--shadow-med);
+  box-shadow: var(--shadow-med-blue);
   text-align: center;
 }
 
@@ -152,6 +141,7 @@ input[type="file"] {
   width: 300px;
   text-align: center;
   vertical-align: middle;
+  box-shadow: var(--shadow-low-indigo);
 }
 
 input[name="selected-work"] {
@@ -234,7 +224,7 @@ line {
 
 /* Overlay and Modal */
 #overlay {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: hsla(0deg 0% 0% / 0.7);
   position: fixed;
   top: 0;
   left: 0;
@@ -264,6 +254,7 @@ line {
   right: 0;
   top: 100px;
   text-align: center;
+  box-shadow: var(--shadow-high);
 }
 
 #close-modal-btn {
