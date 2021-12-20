@@ -1,89 +1,99 @@
 {% extends "base.html.jinja" %}
 {% block content %}
-  <div id='intro'><p>Welcome to Similart! Want to discover art you might like but not sure how? Choose between our many options, whether it's your own favorite artwork, choosing one from a selection, or taking a short quiz, and our machine learning algorithm will generate recommendations for similar artworks so you can discover and learn about art!</p></div>
-  <div id='image-upload-container' class='container'>
+  <div class='blurb'>
+    <p>Welcome to <b>Similart</b>! Want to discover art you might like but not sure how?</p>
+    <p>Choose between our many options, whether it's your own favorite artwork, choosing one from a selection, or taking a short quiz, and our machine learning algorithm will generate recommendations for similar artworks so you can discover and learn about art!</p>
+  </div>
+  <section id='image-upload-container' class='container'>
     <h3 class='instruction'>Option 1: Upload an image of an artwork that you like</h3>
     <form id='image-upload' action='/upload' method='post' enctype='multipart/form-data'>
-      <input type="file" id="user-submission" name="file" accept="image/png, image/jpeg" required>
+      <input type="file" id="file-upload" name="file" accept="image/png, image/jpeg" required>
+      <label class="file-upload-label" for="file-upload">
+        Choose a file
+      </label>
       <div id="image-preview"></div>
       <button type='submit' id='submit-file' disabled>Submit Image</button>
     </form>
+  </section>
+  <section class='container'>
     <h3 class='instruction'>Option 2: Select the artwork that appeals to you the most from the below choices:</h3>
     <form id='image-select' action='/select' method='post'>
       <fieldset class='artworks'>
         {% for i in range(1, 21) %}
           <figure>
             <input type="radio" name="selected-work" id="{{ i }}" value="{{ i }}" required>
-            <label for="{{ i }}"><img src="./static/images/{{ i }}.jpeg" alt="Option {{ i }}"/></label>
+            <label for="{{ i }}">
+              <img src="./static/images/{{ i }}.jpeg" alt="Option {{ i }}"/>
+            </label>
           </figure>
         {% endfor %}
       </fieldset>
       <button type='submit' id='submit-selection' disabled>Submit</button>
     </form>
-  </div>
-  <div id='quiz-container' class='container'></div>
+  </section>
+  <section id='quiz-container' class='container'>
     <h3 class='instruction'>Option 3: Take a short quiz</h3>
     <form id='quiz' action='/quiz' method='post'>
       <fieldset>
         <legend>What are you interested in seeing in art?</legend>
-        <input type="checkbox" name="theme" value="nature">
+        <input type="checkbox" name="theme" value="nature" id="nature">
         <label for="nature">&#127807; Nature</label>
         <br/>
-        <input type="checkbox" name="theme" value="people">
+        <input type="checkbox" name="theme" value="people" id="people">
         <label for="people">&#128106; People</label>
         <br/>
-        <input type="checkbox" name="theme" value="animals">
+        <input type="checkbox" name="theme" value="animals" id="animals">
         <label for="animals">&#128014; Animals</label>
         <br/>
-        <input type="checkbox" name="theme" value="still">
+        <input type="checkbox" name="theme" value="still" id="still">
         <label for="still">&#127824; Still Life/Objects</label>
         <br/>
-        <input type="checkbox" name="theme" value="religious">
+        <input type="checkbox" name="theme" value="religious" id="religious">
         <label for="religious">&#10013; Religious</label>
         <br/>
-        <input type="checkbox" name="theme" value="abstract">
+        <input type="checkbox" name="theme" value="abstract" id="abstract">
         <label for="abstract">&#128165; Abstract</label>
         <br/>
-        <input type="checkbox" name="theme" value="arch">
+        <input type="checkbox" name="theme" value="arch" id="arch">
         <label for="arch">&#128333; Architecture/Structures</label>
         <br/>
-        <input type="checkbox" name="theme" value="fashion">
+        <input type="checkbox" name="theme" value="fashion" id="fashion">
         <label for="fashion">&#129509; Fashion</label>
         <br/>
-        <input type="checkbox" name="theme" value="entertainment">
+        <input type="checkbox" name="theme" value="entertainment" id="entertainment">
         <label for="entertainment">&#127914; Entertainment</label>
         <br/>
-        <input type="checkbox" name="theme" value="war">
+        <input type="checkbox" name="theme" value="war" id="war">
         <label for="war">&#128481; Death/War/Violence</label>
         <br/>
-        <input type="checkbox" name="theme" value="myth">
+        <input type="checkbox" name="theme" value="myth" id="myth">
         <label for="myth">&#129412; Mythology/Monsters</label>
         <br/>
-        <input type="checkbox" name="theme" value="food">
+        <input type="checkbox" name="theme" value="food" id="food">
         <label for="food">&#127790; Food</label>
         <br/>
-         <input type="checkbox" name="theme" value="urban">
+         <input type="checkbox" name="theme" value="urban" id="urban">
         <label for="urban">&#128661; Urban Life</label>
         <br/>
       </fieldset>
       <fieldset>
         <legend>Do you prefer contemporary/modern art or more traditional art?</legend>
-        <input type="radio" name="type" value="contemporary" required>
+        <input type="radio" name="type" value="contemporary" id="contemporary" required>
         <label for="contemporary">Contemporary/Modern</label>
         <br/>
-        <input type="radio" name="type" value="traditional" required>
+        <input type="radio" name="type" value="traditional" id="traditional" required>
         <label for="traditional">Traditional</label>
         <br/>
-        <input type="radio" name="type" value="both" required>
+        <input type="radio" name="type" value="both" id="both" required>
         <label for="both">Both</label>
         <br/>
-        <input type="radio" name="type" value="unknown" required>
+        <input type="radio" name="type" value="unknown" id="unknown" required>
         <label for="unknown">Don't know</label>
         <br/>
       </fieldset>
       <button type='submit' id='submit-quiz' disabled>Submit Quiz</button>
     </form>
-  </div>
+  </section>
 {% endblock %}
 {% block script %}
   <script src="./static/js/index.js"></script>

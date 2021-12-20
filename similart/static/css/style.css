@@ -11,48 +11,86 @@
   padding: 0;
 }
 
+html {
+  --color-gray-light: #e5e7eb;
+  --color-gray-dark: #4b5563;
+  --color-blue-100: #e0f2fe;
+  --color-blue-300: #7dd3fc;
+  --color-blue-500: #0ea5e9;
+  --color-blue-900: #0c4a6e;
+  --color-indigo-100: #e0e7ff;
+  --color-indigo-500: #6366f1;
+  --color-indigo-700: #4338ca;
+  --shadow-med: 4px 4px 6px hsl(0deg 0% 0% / 0.5);
+  --shadow-high: 6px 6px 8px hsl(0deg 0% 0% / 0.3);
+}
+
 body {
   position: relative;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Raleway', sans-serif;
+  background-color: white;
+}
+
+/* Header styles */
+.logo-container {
+  display: inline-block;
+}
+
+#logo {
+  display: block;
+  width: 150px;
 }
 
 header,
 footer {
-  background-color: #b780f5;
-  color: white;
   padding: 20px;
 }
 
-.title,
-.subtitle {
-  color: white;
-  font-family: "Abril Fatface";
-}
-
-.subtitle {
-  font-style: italic;
-}
-
-main {
-  background-color: #fafafa;
-  padding: 20px;
-  min-height: 100vh;
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 a {
   text-decoration: none;
 }
 
-#intro,
-#result-blurb {
-  background-color: #d9f4ff;
-  color: #e080d5;
+.subtitle, .blurb {
+  color: var(--color-gray-dark);
+}
+
+.subtitle {
+  font-family: 'Philosopher', 'Raileway', sans-serif;
+  display: inline;
+}
+
+/* Main */
+main {
+  /* background-color: #fafafa; */
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.blurb {
+  background-color: var(--color-blue-100);
+  border-radius: 8px;
   font-weight: 600;
   padding: 20px;
+  margin-bottom: 50px;
+  box-shadow: var(--shadow-med);
+  text-align: center;
+}
+
+.container {
+  margin-bottom: 60px;
+  padding-top: 10px;
+  text-align: center;
 }
 
 .instruction {
-  color: #b780f5;
+  color: var(--color-gray-dark);
   text-align: center;
 }
 
@@ -63,7 +101,7 @@ fieldset {
 }
 
 legend {
-  color: #592ae6;
+  color: var(--color-indigo-700);
   font-weight: bold;
   padding: 10px;
 }
@@ -73,11 +111,43 @@ input[type="file"] {
   margin: 5px;
 }
 
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+/* Hide file input element to add custom styles */
+input[type="file"] {
+  position: absolute;
+  left: -99999rem;
+}
+
+.file-upload-label {
+  border-radius: 4px;
+  color: var(--color-gray-dark);
+  font-weight: bold;
+  background-color: var(--color-gray-light);
+  box-shadow: var(--shadow-high);
+  display: inline-block;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+
+.file-upload-label:hover,
+#input-file:focus + .file-upload-label {
+  background-color: var(--color-blue-300);
+}
+
 figure {
-  border: 1px solid #b6bbe0;
+  border: 1px solid var(--color-indigo-100);
   display: inline-block;
   margin: 10px;
-  padding: 10px;
   height: 300px;
   width: 300px;
   text-align: center;
@@ -96,21 +166,16 @@ input[name="selected-work"] {
   vertical-align: middle;
 }
 
+.artworks label:hover {
+  cursor: pointer;
+}
+
 img {
   max-height: 90%;
   max-width: 90%;
   margin: 0 auto;
 }
 
-label img:hover {
-  cursor: pointer;
-}
-
-.container {
-  margin-top: 30px;
-  padding-top: 20px;
-  text-align: center;
-}
 
 #image-preview {
   text-align: center;
@@ -122,7 +187,7 @@ label img:hover {
 }
 
 button {
-  background-color: #b780f5;
+  background-color: var(--color-indigo-500);
   border: none;
   border-radius: 10px;
   color: white;
@@ -130,10 +195,11 @@ button {
   font-size: 20px;
   padding: 10px 20px;
   margin: 20px auto;
+  box-shadow: var(--shadow-med);
 }
 
-button:hover {
-  background-color: #592ae6;
+button:hover, button:active {
+  background-color: var(--color-indigo-700);
   color: white;
   cursor: pointer;
 }
@@ -151,14 +217,14 @@ button:disabled {
   margin: auto;
 }
 
-line {
-  pointer-events: none;
-}
-
 #d3-container {
   width: 100%;
   height: 700px;
   overflow: scroll;
+}
+
+line {
+  pointer-events: none;
 }
 
 #preview-image {
@@ -204,5 +270,13 @@ line {
 }
 
 footer {
+  background-color: var(--color-indigo-100);
   font-size: 0.8rem;
+}
+
+/* Mobile styles */
+@media (max-width: 550px) {
+  .subtitle {
+    font-size: 1rem;
+  }
 }
