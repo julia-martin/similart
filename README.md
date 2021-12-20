@@ -1,47 +1,66 @@
-# similart
+# SIMILART
 
-Art Recommendation System
+## DESCRIPTION
 
-## Github House Rules
+Similart is an innovative art recommendation app that displays a force-directed graph of recommended artworks to the user, given information provided by the user
+in one of three ways:
 
-* **Always** make a new branch for code changes. For free, private repositories it is not possible to enforce this as a setting but you should **never** push directly to the main branch.
-* Let the code checks run before merging. Every time you open a pull request a series of basic style checks will be run on the code, if you've installed pre-commit (see below) you should have already addressed these changes, but this will check one more time. As above, it isn't possible in this type of repository to prevent the merge if checks do not pass, but you should wait.
-* Be aware of when you need to pull fresh code that others have pushed, learn about [Rebases and Merges](https://www.atlassian.com/git/tutorials/merging-vs-rebasing) and when (not) to use them.
-* If you run into a merge conflict be sure to find an adult for assistance, these can be tricky to resolve correctly if you are not careful.
+1. An image uploaded by the user
+2. An image selected from the sample artworks shown
+3. A quiz on descriptive preferences
 
-## Dev Setup Instructions
+The project is built as a packaged Flask (Python) application with D3.js for part of the frontend. We use a command
+line interface to handle data ingestion, model training and launching the web app locally.
 
-There a few steps that need to be taken to get setup and running.
+## INSTALLATION
 
-First we'll install managers for both Python versions and Virtual Environments. If you are on Windows your life may be harder, virtual environments are not **stricly** necessary but you will likely be caused some degree of agony and heartbreak by not using them, as they keep the Python and package versions for this project separate from anything else you have running on your machine.
+We were planning to deploy the app to Heroku, but due to space and time constraints we were not able to. To run Similart on your machine, follow the steps below.
 
-These instructions apply to MacOS and other *Nix systems, Windows versions of these tools do exist though.
+Similart is built for Python 3.9.0, compatibility with other versions is not guaranteed.
 
-* Clone the repo to your local machine. I prefer to use the SSH method, but HTTPS will work just fine too.
-* Install [pyenv](https://github.com/pyenv/pyenv) and [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv) with homebrew if you can, other ways if you must.
-* Install Python 3.9.0 with `pyenv install 3.9.0`
-* Navigate to the root of this project directory.
-* Create a virtualenv for the repo with `pyenv virtualenv 3.9.0 similart`
-* In the project root execute `echo 3.9.0/envs/similart > .python-version` (this is what tells pyenv-virtualenv to activate the correct environment in this directory)
+Similart is packaged according to PEP-518 guidelines and is available to be installed via pip from GitHub:
 
-Next we'll install development dependencies and get the package installed.
+pip install git+https://github.com/samuelhallam/similart.git
 
-* Run `pip install -r requirements-dev.txt` This installs linters and other code-checks.
-* Run `pre-commit install` to add the same CI checks to your local machine.
-* Run `pip install -e .` This installs the package in **editable** mode, as you make changes to the code, things will change as you save files. Very useful.
+To initialize, run 'similart run' after install from your terminal/command prompt of choice, this will ingest data and train the model if needed. Ingestion will take
+roughly one hour, training will take approximiately five minutes.
 
-I have included a `.flake8` file which contains configuration instructions for using flake8 as a linter. This can be imported into most code editors, VSCode, Pycharm etc. and allows us to have a consistent style as we write code together. Having said that, the checks are extremely lightweight and if you choose not to use them you are unlikely to cause issues unless you are reponsible for some truly horrific code.
+To re-ingest and re-train the model you can also run 'similart refresh' which will replace the model and data files
+regardless of whether they had been previously created.
 
-At this point you should be ready to make changes to the code!
+## EXECUTION
 
-## The Project
+Once launched, the app will be running by default on port 5000. Navigate to http://127.0.0.1:5000 in your browser of
+choice and the application is ready to be used. Input images can be entered in any of the three ways listed
+in the description section. A recommendation graph will be shown shortly after submission.
 
-This is built as a basic [Flask](https://flask.palletsprojects.com/en/2.0.x/) application. Flask is a lightweight framework for web-apps built in Python. The project is also structured as a [Python Package](https://packaging.python.org/tutorials/packaging-projects/). The history of how to package a Python project is fraught with much drama, the end result being that there remains to this day no consistent way to package Python projects. For this I may have mostly folllowed [PEP-518 guidelines](https://www.python.org/dev/peps/pep-0518/), by packaging the project we allow for the `pip install` command we used earlier.
+# How we built it
+## Dataset
+We used a public dataset from the Art Institute of Chicago, as it is diverse and free, enabling us to more easily provide a free service to users.  We selected a subset of 3000 paintings (810 MB) from the dataset.  This subset maintains sufficient diversity and sample size, while still being manageable.
+## Algorithms
+Our project necessitates a combination of two separate algorithms, due to the multiple options we provide to the user.  We felt the below combination will enable us to improve upon the state of the art, due to its simplicity, flexibility, and effectiveness.
 
-Flask projects render templates found in the `templates` directory. The convention is that html template files live here, with CSS and JS code in the `static` directory. I have copied over a sample CSS file and the same d3 libraries from HW2 Q3 into this folder. We should be using something like [npm](https://www.npmjs.com/) for the JS library management, but for now, you can work in the `templates` directory right away. You can add test routes to render templates and develop with limit outside input.
+- **Option A**: The user opts to upload a photo or select from a list of photos. In this case, we use Principal Component Analysis (a dimensionality reduction technique) and K-Nearest Neighbors (a classification algorithm). This model is trained merely on the image data.
 
-## Making Package Updates
+- **Option B**: The user opts to instead select topics/concepts that interest them.  In this case, we use a text-based model based on the image metadata, rather than the image itself.
 
-Given that there are limited guidelines on project structure, there are also many methods to update package versions in Python. Consider following [Semantic Versioning](https://semver.org/) guidelines and update the `version.py` in the main project file accordingly, if nothing this allows us to check which versions we are working with quickly.
+**For Option A**:
+The PCA algorithm comprises the following steps:
+1. Utilize the function skimage.transform.resize() to resize the image to 300px x 300px.  This makes all images of comparable size without cropping and losing information.
+2. “Unfold” each image into a 3002-dimensional column vector.
+3. Arrange all column vectors into one big matrix – one column per image.
+4. Subtract the mean of all vectors from each column vector.  The mean can be thought of as the “average” of all artworks.
+5. Compute the covariance matrix, and find eigenvalues (λ) and eigenvectors (v).
+6. Select the first m eigenvectors with the highest eigenvalues – the eigenvectors that span the most variance in the matrix.  These are the principal components.  Initially we selected m = 2 for ease of interpretability (see 2-dimensional plot in Figure 1 below).  However, our final algorithm used m = 283.  Refer to section 4.0 for details on this decision.
+7. Project each image to the space of eigenvectors, i.e., represent the original picture as a linear combination of the principal components (eigenvectors).  Essentially a dot product between the original image and each eigenvector:
 
-We will likely need to add more Python dependencies as the project grows in size, depedencies are managed in the `setup.cfg` file. My initial commit includes basic packages, but to add more packages simply add the names in the 'install_requires' sections as needed.
+Note:  Initially, we tried both PCA and ISOMAP (non-linear dimensionality reduction), but ISOMAP had a longer delay in runtime and did not seem to produce as relevant of recommendations as PCA.
+
+Whether the user uploads a photo of artwork of their own choosing or whether they choose to select an image from the curated set, we resize the image and run it through the PCA algorithm, then return its 8 nearest neighbors, and for each of those neighbors, return their 4 nearest neighbors.  “Nearest” is determined by the Euclidean distance between the vectors.
+
+**For Option B**:
+As it is a text-based model, this option required a significant amount of manual data cleaning.  The metadata available in the dataset for each image includes several fields.  The “subject_titles” field was determined to be most relevant as it contains the text which is the most descriptive of the content of the artwork.  Each image has an associated comma-separated list of tags.  There were a total of over 700 unique values in all.  We further grouped these down into a manageable 13 attributes: nature, animals, people, still life, religion, abstract, architecture/structures, fashion, entertainment, death/war/violence, mythology/monsters, food, and urban life.
+
+The user is prompted to select from the 13 attributes.  They may select one or multiple attributes that interest them.  We then essentially filter the artwork dataset down to only those that contain at least one of the attributes the user selected.  We then return ~20 images, randomly selected from this filtered list.
+
+Initially, we considered returning the 20 “most relevant” pieces of art from the dataset, where “relevant” in this case was defined as and ranked by the number of checkbox attributes that an individual image satisfied.  I.e., an image that satisfied all of a user’s selected checkboxes would be considered more relevant than an image that satisfied only one checkbox.  However, we discussed that just because a user enjoys certain subjects in art does not mean that the user will necessarily want to see them all together at the same time in the same piece of art.  We also felt it might artificially limit the results and therefore the artwork exposure we could give to users.  Thus, we opted to simply show ~20 randomly selected images from the dataset that satisfy at least one of the checkbox attributes selected by the user.
