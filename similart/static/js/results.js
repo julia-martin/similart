@@ -4,6 +4,7 @@ const dataElem = document.getElementById("data-container");
 const container = document.getElementById("d3-container");
 const modal = document.getElementById("modal");
 const overlay = document.getElementById("overlay");
+const closeModalBtn = document.getElementById("close-modal-btn");
 
 const graphData = JSON.parse(dataElem.dataset.results);
 
@@ -113,7 +114,10 @@ function showArtDetails() {
   modal.style.visibility = "visible";
 }
 
-overlay.addEventListener("click", () => {
+function closeModal() {
   overlay.style.visibility = "hidden";
   modal.style.visibility = "hidden";
-});
+}
+
+overlay.addEventListener("click", closeModal);
+closeModalBtn.addEventListener("click", closeModal);

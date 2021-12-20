@@ -23,23 +23,23 @@
     <footer>
       Image data provided by the Art Institute of Chicago
     </footer>
-    <div id="modal">
-      <div id="rec-image-section">
-        {# <figure> #}
+    <div id="overlay">
+      <div id="modal">
+        <button id="close-modal-btn"><img src="./static/icons/icons8-close.svg" alt="Close Modal"/></button>
+        <div id="rec-image-section">
           <img src="../static/images/1.jpeg" alt="example" id="rec-image"/>
-        {# </figure> #}
-      </div>
-      <div>
-        <h2 id="rec-title">Title</h2>
-      </div>
-      <div>
-        <h3 id="rec-artist">Artist</h3>
-      </div>
-      <div>
-        <h3 id="rec-year">Year</h3>
+        </div>
+        <div>
+          <h2 id="rec-title">Title</h2>
+        </div>
+        <div>
+          <h3 id="rec-artist">Artist</h3>
+        </div>
+        <div>
+          <h3 id="rec-year">Year</h3>
+        </div>
       </div>
     </div>
-    <div id="overlay"></div>
     {% block script %}{% endblock %}
   </body>
 </html>
